@@ -7,7 +7,7 @@
   },
   "servers": {
     "production": {
-      "host": "stream.coingecko.com",
+      "host": "echo.websocket.org",
       "protocol": "wss",
       "pathname": "/v1",
       "description": "Production WebSocket server",
