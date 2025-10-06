@@ -162,7 +162,8 @@
         "properties": {
           "name": {
             "description": "The name of the plant",
-            "type": "string"
+            "type": "string",
+            "default": "Monstera Deliciosa"
           },
           "tag": {
             "description": "Tag to specify the type",
@@ -183,6 +184,7 @@
             "properties": {
               "id": {
                 "description": "Identification number of the plant",
+                "default": 1,
                 "type": "integer",
                 "format": "int64"
               }
