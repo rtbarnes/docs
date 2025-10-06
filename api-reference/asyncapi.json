@@ -80,6 +80,18 @@
               "default": "{\"coin_id\":[\"bitcoin\"],\"action\":\"set_tokens\"}",
               "example": "{\"coin_id\":[\"bitcoin\"],\"action\":\"set_tokens\"}",
               "description": "EDIT THIS: Change the coin_id array. Examples: [\"bitcoin\"] or [\"bitcoin\",\"ethereum\"] or [\"bitcoin\",\"ethereum\",\"cardano\"]"
+            },
+            "nested": {
+              "type": "object",
+              "properties": {
+                "favoriteColor": {
+                  "type": "string",
+                  "default": "blue"
+                },
+                "favoriteDog": {
+                  "type": "string"
+                }
+              }
             }
           },
           "required": [
