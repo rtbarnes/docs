@@ -57,13 +57,19 @@
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Endpoint examples!",
             "pages": [
               "api-reference/endpoint/get",
               "api-reference/endpoint/create",
               "api-reference/endpoint/delete",
               "api-reference/endpoint/webhook"
             ]
+          },
+          {
+            "group": "AsyncAPI documentation",
+            "asyncapi": {
+              "source": "api-reference/asyncapi.json"
+            }
           }
         ]
       }
@@ -102,15 +108,15 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
