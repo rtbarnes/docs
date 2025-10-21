@@ -21,6 +21,7 @@
   "paths": {
     "/plants": {
       "get": {
+        "deprecated": true,
         "description": "Returns all plants from the system that the user has access to",
         "parameters": [
           {
@@ -96,6 +97,48 @@
         }
       }
     },
+    "/plants/search": {
+      "post": {
+        "deprecated": true,
+        "description": "Search for plants using flexible criteria. Results match any of the provided criteria.",
+        "requestBody": {
+          "description": "Search criteria - matches plants meeting any of the conditions",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlantSearchCriteria"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Plant"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/plants/{id}": {
       "delete": {
         "description": "Deletes a single plant based on the ID supplied",
@@ -115,6 +158,145 @@
           "204": {
             "description": "Plant deleted",
             "content": {}
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plants/{id}/care-schedule": {
+      "post": {
+        "description": "Add a care schedule entry for a plant. Must be one of: watering, fertilizing, or pruning.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the plant",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Care schedule entry - must match exactly one care type",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CareSchedule"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Care schedule created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareSchedule"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plants/{id}/location": {
+      "put": {
+        "description": "Update the location and environment conditions for a plant",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the plant",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Location combining base location info with environmental details",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlantLocation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Location updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlantLocation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plants/{id}/hierarchy": {
+      "get": {
+        "description": "Get the plant hierarchy showing parent-child relationships",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the plant",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plant hierarchy with circular references",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlantHierarchy"
+                }
+              }
+            }
           },
           "400": {
             "description": "unexpected error",
@@ -168,6 +350,46 @@
           "tag": {
             "description": "Tag to specify the type",
             "type": "string"
+          },
+          "related_plants": {
+            "description": "Related plants",
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "description": "Plant name"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "Plant ID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Plant name"
+                    },
+                    "relationship": {
+                      "type": "string",
+                      "description": "Type of relationship",
+                      "enum": [
+                        "similar",
+                        "complementary",
+                        "companion",
+                        "variety"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
           }
         }
       },
@@ -205,6 +427,238 @@
           },
           "message": {
             "type": "string"
+          }
+        }
+      },
+      "CareSchedule": {
+        "description": "Care schedule entry - must be exactly one type of care",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/WateringSchedule"
+          },
+          {
+            "$ref": "#/components/schemas/FertilizingSchedule"
+          },
+          {
+            "$ref": "#/components/schemas/PruningSchedule"
+          }
+        ]
+      },
+      "WateringSchedule": {
+        "type": "object",
+        "required": [
+          "type",
+          "frequency",
+          "amount"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "watering"
+            ]
+          },
+          "frequency": {
+            "type": "string",
+            "description": "How often to water",
+            "example": "every 3 days"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Amount of water",
+            "example": "250ml"
+          }
+        }
+      },
+      "FertilizingSchedule": {
+        "type": "object",
+        "required": [
+          "type",
+          "frequency",
+          "fertilizer"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "fertilizing"
+            ]
+          },
+          "frequency": {
+            "type": "string",
+            "description": "How often to fertilize",
+            "example": "monthly"
+          },
+          "fertilizer": {
+            "type": "string",
+            "description": "Type of fertilizer to use",
+            "example": "10-10-10 NPK"
+          }
+        }
+      },
+      "PruningSchedule": {
+        "type": "object",
+        "required": [
+          "type",
+          "frequency",
+          "pruningType"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "pruning"
+            ]
+          },
+          "frequency": {
+            "type": "string",
+            "description": "How often to prune",
+            "example": "quarterly"
+          },
+          "pruningType": {
+            "type": "string",
+            "description": "Type of pruning needed",
+            "enum": [
+              "deadheading",
+              "shaping",
+              "thinning"
+            ]
+          }
+        }
+      },
+      "PlantSearchCriteria": {
+        "description": "Search criteria - plant must match at least one of the specified conditions",
+        "type": "object",
+        "anyOf": [
+          {
+            "required": [
+              "namePattern"
+            ]
+          },
+          {
+            "required": [
+              "tag"
+            ]
+          },
+          {
+            "required": [
+              "minSize"
+            ]
+          }
+        ],
+        "properties": {
+          "namePattern": {
+            "type": "string",
+            "description": "Pattern to match against plant names",
+            "example": "Monstera"
+          },
+          "tag": {
+            "type": "string",
+            "description": "Tag to filter by",
+            "example": "tropical"
+          },
+          "minSize": {
+            "type": "number",
+            "description": "Minimum size in cm",
+            "example": 50
+          }
+        }
+      },
+      "BaseLocation": {
+        "type": "object",
+        "required": [
+          "room",
+          "position"
+        ],
+        "properties": {
+          "room": {
+            "type": "string",
+            "description": "Room where the plant is located",
+            "example": "Living Room"
+          },
+          "position": {
+            "type": "string",
+            "description": "Position within the room",
+            "example": "Near the window"
+          }
+        }
+      },
+      "EnvironmentConditions": {
+        "type": "object",
+        "required": [
+          "lightLevel",
+          "humidity"
+        ],
+        "properties": {
+          "lightLevel": {
+            "type": "string",
+            "description": "Amount of light the location receives",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "direct"
+            ]
+          },
+          "humidity": {
+            "type": "number",
+            "description": "Humidity percentage",
+            "minimum": 0,
+            "maximum": 100,
+            "example": 65
+          },
+          "temperature": {
+            "type": "number",
+            "description": "Average temperature in Celsius",
+            "example": 22
+          }
+        }
+      },
+      "PlantLocation": {
+        "description": "Complete location information combining base location and environment",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseLocation"
+          },
+          {
+            "$ref": "#/components/schemas/EnvironmentConditions"
+          }
+        ]
+      },
+      "PlantHierarchy": {
+        "description": "Plant with hierarchical relationships - demonstrates circular reference",
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier for the plant"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the plant"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/PlantHierarchy",
+            "description": "Parent plant"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlantHierarchy"
+            },
+            "description": "Child plants"
+          },
+          "siblings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlantHierarchy"
+            },
+            "description": "Sibling plants"
           }
         }
       }
