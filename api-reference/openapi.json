@@ -348,8 +348,22 @@
             "default": "Monstera Deliciosa"
           },
           "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Pure-string tag to specify the type"
+              },
+              {
+                "type": "object",
+                "description": "Object tag to specify the type",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Tag name"
+                  }
+                }
+              }
+            ]
           },
           "related_plants": {
             "description": "Related plants",
@@ -357,8 +371,14 @@
             "items": {
               "oneOf": [
                 {
-                  "type": "string",
-                  "description": "Plant name"
+                  "type": "object",
+                  "description": "Plant name",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Plant name"
+                    }
+                  }
                 },
                 {
                   "type": "object",

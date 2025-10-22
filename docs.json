@@ -65,7 +65,8 @@
               "api-reference/endpoint/webhook",
               "api-reference/endpoint/search",
               "api-reference/endpoint/change-location",
-              "api-reference/endpoint/hierarchy"
+              "api-reference/endpoint/hierarchy",
+              "api-reference/endpoint/get-asset-proof"
             ]
           },
           {
