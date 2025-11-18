@@ -67,6 +67,8 @@
               "api-reference/endpoint/change-location",
               "api-reference/endpoint/hierarchy",
               "api-reference/endpoint/get-asset-proof"
+              "api-reference/endpoint/get-asset-proof",
+              "api-reference/endpoint/get-pots"
             ]
           },
           {

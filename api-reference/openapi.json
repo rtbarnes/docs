@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "http://localhost:3001"
     }
   ],
   "security": [
@@ -19,6 +19,169 @@
     }
   ],
   "paths": {
+    "/pots": {
+      "get": {
+        "description": "Returns all pots accessible to the user.",
+        "security": [],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "The type of pot to return",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "clay",
+                "plastic",
+                "ceramic"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pot response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "color",
+                    "material"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "color": {
+                      "type": "string"
+                    },
+                    "sizes": {
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      }
+                    },
+                    "grains": {
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          {
+                            "type": "number",
+                            "nullable": true
+                          }
+                        ]
+                      }
+                    },
+                    "material": {
+                      "description": "The material of the pot",
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "title": "CeramicPot",
+                          "properties": {
+                            "glaze": {
+                              "type": "string"
+                            },
+                            "hardness": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "hardness"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "hardness": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "size": {
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "example": {
+                    "name": "Pot 1",
+                    "color": "Red",
+                    "sizes": [
+                      "10cm",
+                      "15cm",
+                      "20cm"
+                    ],
+                    "grains": [
+                      "100",
+                      "200",
+                      "300"
+                    ],
+                    "material": {
+                      "glaze": "Matte",
+                      "hardness": 5
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/long": {
+      "get": {
+        "description": "Returns a bunch of strings",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "The number of strings to return",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bunch of strings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/plants": {
       "get": {
         "deprecated": true,
@@ -68,6 +231,121 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/NewPlant"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "plant response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Plant"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plants/bulk": {
+      "post": {
+        "description": "Creates multiple plants in the store",
+        "parameters": [
+          {
+            "name": "X-MISC-HEADER",
+            "in": "header",
+            "description": "A misc header",
+            "schema": {
+              "type": "string",
+              "required": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Plant to add to the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "upsert": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "plantsToCreate": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "description": "A plant to create",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "oneOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  },
+                  "simpleObject": {
+                    "type": "object",
+                    "description": "A simple object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "clay",
+                          "plastic",
+                          "ceramic"
+                        ]
+                      }
+                    }
+                  },
+                  "otherObject": {
+                    "type": "object",
+                    "properties": {
+                      "arrayOfArrays": {
+                        "type": "array",
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "additionalProperties": true
+                  }
+                }
               }
             }
           },
@@ -315,7 +593,7 @@
   "webhooks": {
     "/plant/webhook": {
       "post": {
-        "description": "Information about a new plant added to the store",
+        "description": "OAuth scope: `organization.read`\n\nWebhook that delivers events related to accounts.\n\nSupported event:\n  - `accounts.created`\n  - `accounts.updated`\n",
         "requestBody": {
           "description": "Plant added to the store",
           "content": {
