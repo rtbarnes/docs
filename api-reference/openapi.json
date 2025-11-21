@@ -18,7 +18,6 @@
       "bearerAuth": []
     }
   ],
-  "paths": {
     "/pots": {
       "get": {
         "description": "Returns all pots accessible to the user.",
