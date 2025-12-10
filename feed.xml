@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Documentation Feed</title>
+  <link href="https://docs.example.com/feed.xml" rel="self"/>
+  <updated>2024-01-01T00:00:00Z</updated>
+  <author>
+    <name>Docs Team</name>
+  </author>
+  <id>https://docs.example.com/feed.xml</id>
+  <entry>
+    <title>Quickstart Guide</title>
+    <link href="https://docs.example.com/quickstart"/>
+    <id>https://docs.example.com/quickstart</id>
+    <updated>2024-01-01T00:00:00Z</updated>
+    <summary>Get started with our documentation in minutes</summary>
+  </entry>
+</feed>
