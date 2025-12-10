@@ -6,11 +6,12 @@
     "primary": "#16A34A",
     "light": "#07C983",
     "dark": "#15803D"
+  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Guides r cool",
         "groups": [
           {
             "group": "Getting started",
