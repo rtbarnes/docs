@@ -129,11 +129,5 @@
       "github": "https://github.com/mintlify",
       "linkedin": "https://linkedin.com/company/mintlify"
     }
-  },
-  "fonts": {
-    "family": "Montserrat",
-    "source": "/fonts/Montserrat-VariableFont_wght.ttf",
-    "format": "ttf",
-    "weight": "400"
   }
 }
