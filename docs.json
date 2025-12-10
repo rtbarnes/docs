@@ -131,9 +131,9 @@
     }
   },
   "fonts": {
-    "family": "Montserrat",
-    "source": "/fonts/Montserrat-VariableFont_wght.ttf",
-    "format": "ttf",
+    "family": "Atkinson",
+    "source": "/fonts/atkinson-regular.woff",
+    "format": "woff",
     "weight": "400"
   }
 }
