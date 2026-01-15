@@ -1,13 +1,12 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "palm",
   "name": "Mint Starter Kit",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
     "dark": "#15803D"
   },
-  "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
@@ -71,6 +70,10 @@
             ]
           },
           {
+            "group": "User API documentation",
+            "openapi": "api-reference/openapi-example.json"
+          },
+          {
             "group": "AsyncAPI documentation",
             "asyncapi": {
               "source": "api-reference/asyncapi.json"
@@ -80,6 +83,25 @@
       }
     ],
     "global": {
+      "languages": [
+        {
+          "language": "en",
+          "default": true,
+          "href": "https://developers.example.com/docs"
+        },
+        {
+          "language": "de",
+          "href": "https://developers.example.de/docs"
+        },
+        {
+          "language": "fr",
+          "href": "https://developers.example.fr/docs"
+        },
+        {
+          "language": "es",
+          "href": "https://developers.example.es/docs"
+        }
+      ],
       "anchors": [
         {
           "anchor": "Documentation",
@@ -92,6 +114,11 @@
           "icon": "newspaper"
         }
       ]
+    }
+  },
+  "api": {
+    "params": {
+      "expanded": "all"
     }
   },
   "logo": {
