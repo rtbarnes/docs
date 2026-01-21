@@ -15,33 +15,33 @@
           {
             "group": "Getting started",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "docs/index",
+              "docs/quickstart",
+              "docs/development"
             ]
           },
           {
             "group": "Customization",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "docs/essentials/settings",
+              "docs/essentials/navigation"
             ]
           },
           {
             "group": "Writing content",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "docs/essentials/markdown",
+              "docs/essentials/code",
+              "docs/essentials/images",
+              "docs/essentials/reusable-snippets"
             ]
           },
           {
             "group": "AI tools",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "docs/ai-tools/cursor",
+              "docs/ai-tools/claude-code",
+              "docs/ai-tools/windsurf"
             ]
           }
         ]
@@ -52,31 +52,31 @@
           {
             "group": "API documentation",
             "pages": [
-              "api-reference/introduction"
+              "docs/api-reference/introduction"
             ]
           },
           {
             "group": "Endpoint examples",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook",
-              "api-reference/endpoint/search",
-              "api-reference/endpoint/change-location",
-              "api-reference/endpoint/hierarchy",
-              "api-reference/endpoint/get-asset-proof",
-              "api-reference/endpoint/get-pots"
+              "docs/api-reference/endpoint/get",
+              "docs/api-reference/endpoint/create",
+              "docs/api-reference/endpoint/delete",
+              "docs/api-reference/endpoint/webhook",
+              "docs/api-reference/endpoint/search",
+              "docs/api-reference/endpoint/change-location",
+              "docs/api-reference/endpoint/hierarchy",
+              "docs/api-reference/endpoint/get-asset-proof",
+              "docs/api-reference/endpoint/get-pots"
             ]
           },
           {
             "group": "User API documentation",
-            "openapi": "api-reference/openapi-example.json"
+            "openapi": "docs/api-reference/openapi-example.json"
           },
           {
             "group": "AsyncAPI documentation",
             "asyncapi": {
-              "source": "api-reference/asyncapi.json"
+              "source": "docs/api-reference/asyncapi.json"
             }
           }
         ]
