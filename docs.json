@@ -8,6 +8,39 @@
     "dark": "#15803D"
   },
   "navigation": {
+    "global": {
+      "languages": [
+        {
+          "language": "en",
+          "default": true,
+          "href": "https://developers.example.com/docs"
+        },
+        {
+          "language": "de",
+          "href": "https://developers.example.de/docs"
+        },
+        {
+          "language": "fr",
+          "href": "https://developers.example.fr/docs"
+        },
+        {
+          "language": "es",
+          "href": "https://developers.example.es/docs"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor": "Documentation",
+          "icon": "book-open-cover",
+          "href": "https://mintlify.com/docs"
+        },
+        {
+          "anchor": "Blog",
+          "icon": "newspaper",
+          "href": "https://mintlify.com/blog"
+        }
+      ]
+    },
     "tabs": [
       {
         "tab": "Guides",
@@ -15,6 +48,7 @@
           {
             "group": "Getting started",
             "pages": [
+              "docs/commenting-test-page",
               "docs/index",
               "docs/quickstart",
               "docs/development"
@@ -81,40 +115,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "languages": [
-        {
-          "language": "en",
-          "default": true,
-          "href": "https://developers.example.com/docs"
-        },
-        {
-          "language": "de",
-          "href": "https://developers.example.de/docs"
-        },
-        {
-          "language": "fr",
-          "href": "https://developers.example.fr/docs"
-        },
-        {
-          "language": "es",
-          "href": "https://developers.example.es/docs"
-        }
-      ],
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "api": {
     "params": {
