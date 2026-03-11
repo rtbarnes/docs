@@ -71,7 +71,7 @@
           },
           {
             "group": "User API documentation",
-            "openapi": "docs/api-reference/openapi-example.json"
+            "openapi": "openapi/openapi-example.json"
           },
           {
             "group": "AsyncAPI documentation",
