@@ -56,6 +56,16 @@
             ]
           },
           {
+            "group": "OpenAPI reference tests",
+            "pages": [
+              "docs/api-reference/openapi-test/index",
+              "docs/api-reference/openapi-test/relative",
+              "docs/api-reference/openapi-test/absolute",
+              "docs/api-reference/openapi-test/same-dir",
+              "docs/api-reference/openapi-test/remote"
+            ]
+          },
+          {
             "group": "Endpoint examples",
             "pages": [
               "docs/api-reference/endpoint/get",
