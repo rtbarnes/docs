@@ -80,10 +80,6 @@
             ]
           },
           {
-            "group": "User API documentation",
-            "openapi": "openapi/openapi-example.json"
-          },
-          {
             "group": "AsyncAPI documentation",
             "asyncapi": {
               "source": "docs/api-reference/asyncapi.json"

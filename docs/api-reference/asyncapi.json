@@ -81,6 +81,38 @@
               "example": "{\"coin_id\":[\"bitcoin\"],\"action\":\"set_tokens\"}",
               "description": "EDIT THIS: Change the coin_id array. Examples: [\"bitcoin\"] or [\"bitcoin\",\"ethereum\"] or [\"bitcoin\",\"ethereum\",\"cardano\"]"
             },
+            "generation_config": {
+              "type": "object",
+              "description": "Generation configuration",
+              "properties": {
+                "volume": {
+                  "type": "number",
+                  "description": "The volume of the generated speech. Defaults to 1.0.",
+                  "default": 1.0
+                },
+                "speed": {
+                  "type": "number",
+                  "description": "The speed of the generated speech. Defaults to 1.0.",
+                  "default": 1.0
+                },
+                "emotion": {
+                  "type": "string",
+                  "description": "The primary emotions are neutral, calm, angry, content, sad, scared.",
+                  "enum": [
+                    "neutral", "calm", "angry", "content", "sad", "scared", "happy", "excited",
+                    "fearful", "joyful", "surprised", "disgusted", "anxious", "peaceful", "frustrated",
+                    "hopeful", "bored", "confused", "curious", "delighted", "embarrassed", "envious",
+                    "grateful", "guilty", "jealous", "lonely", "loving", "nostalgic", "overwhelmed",
+                    "proud", "relieved", "resentful", "satisfied", "stressed", "tired", "worried",
+                    "amused", "affectionate", "alarmed", "ashamed", "awe", "bitter", "confident",
+                    "depressed", "determined", "eager", "ecstatic", "empathetic", "energetic",
+                    "enthusiastic", "hostile", "indifferent", "inspired", "interested", "irritated",
+                    "melancholy", "optimistic", "pessimistic", "playful", "relaxed", "sentimental",
+                    "shocked", "skeptical", "sympathetic", "tense", "thoughtful", "triumphant"
+                  ]
+                }
+              }
+            },
             "nested": {
               "type": "object",
               "properties": {
