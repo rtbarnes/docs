@@ -54,6 +54,22 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "simpleObject": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "clay",
+                            "plastic",
+                            "ceramic"
+                          ]
+                        }
+                      }
+                    },
                     "color": {
                       "type": "string"
                     },
@@ -125,7 +141,7 @@
                     }
                   },
                   "example": {
-                    "name": "Pot 1",
+                    "name": "DOCS_SEARCH_PROBE_OPENAPI_EXAMPLE_ONLY_7f3a9b2e",
                     "color": "Red",
                     "sizes": [
                       "10cm",
