@@ -1,0 +1,97 @@
+---
+title: "Implement signed webhooks"
+description: "Add inbound webhook verification for billing events."
+icon: "shield-check"
+---
+
+Use this guide when you want a coding agent to add signed webhook support for the fictional Acorn Billing API.
+
+## What to build
+
+- A `POST /api/webhooks/acorn-billing` endpoint
+- Signature verification before any business logic runs
+- Support for `invoice.paid`, `invoice.failed`, and `subscription.canceled`
+- Delivery deduplication using the delivery ID header
+
+## Request format
+
+Acorn Billing sends JSON webhooks with these headers:
+
+- `x-acorn-delivery-id`: unique ID for this delivery attempt
+- `x-acorn-timestamp`: Unix timestamp in seconds
+- `x-acorn-signature`: HMAC SHA-256 hex digest
+
+The request body looks like this:
+
+```json
+{
+  "id": "evt_9f2c0c0d",
+  "type": "invoice.paid",
+  "created_at": "2026-04-01T18:24:11Z",
+  "data": {
+    "invoice_id": "inv_4821",
+    "customer_id": "cus_1942",
+    "amount": 12900,
+    "currency": "usd"
+  }
+}
+```
+
+## Verification flow
+
+1. Parse the JSON request body.
+2. Build the signed payload as `${timestamp}.${JSON.stringify(body)}`.
+3. Compute the expected digest with HMAC SHA-256 and `ACORN_WEBHOOK_SECRET`.
+4. Compare the expected digest to `x-acorn-signature` using a constant-time comparison.
+5. Reject requests where the timestamp is more than 5 minutes old.
+
+```ts
+import { createHmac, timingSafeEqual } from 'node:crypto';
+
+export function verifyAcornSignature(body: unknown, timestamp: string, signature: string) {
+  const payload = `${timestamp}.${JSON.stringify(body)}`;
+  const expected = createHmac('sha256', process.env.ACORN_WEBHOOK_SECRET!)
+    .update(payload)
+    .digest('hex');
+
+  return timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+}
+```
+
+## Handler behavior
+
+- Return `200 OK` as soon as the signature is valid and the event is queued.
+- Store `x-acorn-delivery-id` so duplicate deliveries can be ignored.
+- Route events by `type`.
+- Do not block the webhook response on downstream API calls.
+
+## Event handling rules
+
+### `invoice.paid`
+
+- Mark the invoice as paid
+- Add a payment timeline entry
+- Send the customer receipt email
+
+### `invoice.failed`
+
+- Mark the invoice as overdue
+- Schedule the retry notification workflow
+
+### `subscription.canceled`
+
+- Record the cancelation time
+- Revoke premium access at the end of the billing period
+
+## Local testing
+
+Use this payload with a local signer when testing:
+
+```bash
+curl -X POST http://localhost:3000/api/webhooks/acorn-billing \
+  -H "content-type: application/json" \
+  -H "x-acorn-delivery-id: del_123" \
+  -H "x-acorn-timestamp: 1712426400" \
+  -H "x-acorn-signature: <computed-signature>" \
+  -d '{"id":"evt_9f2c0c0d","type":"invoice.paid","data":{"invoice_id":"inv_4821"}}'
+```

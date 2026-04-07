@@ -1,0 +1,97 @@
+---
+title: "Implement team feature flags"
+description: "Add team-scoped feature flags with environment targeting."
+icon: "toggle-on"
+---
+
+Use this guide when you want a coding agent to add team-scoped feature flags for the fictional Acorn Workspace product.
+
+## What to build
+
+- A feature flag model with workspace-level defaults
+- Optional team-specific overrides
+- Optional environment-specific overrides for `development`, `staging`, and `production`
+- A helper like `isFeatureEnabled(flagKey, context)`
+- Percentage rollouts for gradual launches
+
+## Data model
+
+Use a structure like this:
+
+```ts
+type FeatureFlag = {
+  key: string;
+  enabled: boolean;
+  rolloutPercentage?: number;
+  environment?: 'development' | 'staging' | 'production';
+  teamId?: string;
+};
+```
+
+You can store multiple records for the same `key` as long as each record targets a different scope.
+
+## Evaluation context
+
+The helper should accept:
+
+```ts
+type EvaluationContext = {
+  workspaceId: string;
+  teamId?: string;
+  environment: 'development' | 'staging' | 'production';
+  userId: string;
+};
+```
+
+## Evaluation rules
+
+1. Start with the workspace-level flag.
+2. Check for any environment-specific flag for the same key.
+3. Check for any team-specific flag for the same key.
+4. If a matching flag has a `rolloutPercentage`, hash the `userId` into a bucket from `0` to `99`.
+5. Return `true` when the user falls inside the rollout window.
+
+## Admin behavior
+
+- Product admins can create and edit flags
+- Team leads can edit team-specific overrides for their own team
+- Changes should take effect without restarting the server
+- Audit log entries should record who changed the flag and when
+
+## API shape
+
+### Create a flag
+
+`POST /api/feature-flags`
+
+```json
+{
+  "key": "new-sidebar",
+  "enabled": true,
+  "environment": "production",
+  "teamId": "team_design"
+}
+```
+
+### Evaluate a flag
+
+`POST /api/feature-flags/evaluate`
+
+```json
+{
+  "key": "new-sidebar",
+  "context": {
+    "workspaceId": "ws_123",
+    "teamId": "team_design",
+    "environment": "production",
+    "userId": "user_42"
+  }
+}
+```
+
+## Implementation notes
+
+- Keep the evaluation helper deterministic for the same user and flag
+- Cache the active flag set for a short period to reduce database reads
+- Return both the boolean result and the matched flag record from the evaluation endpoint
+- Add unit tests around rollout boundaries and missing team IDs

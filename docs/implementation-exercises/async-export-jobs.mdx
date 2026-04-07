@@ -1,0 +1,117 @@
+---
+title: "Implement async export jobs"
+description: "Build a job-based CSV export flow for workspace data."
+icon: "file-arrow-down"
+---
+
+Use this guide when you want a coding agent to add background export jobs for the fictional Acorn Analytics product.
+
+## What to build
+
+- `POST /api/exports` to create a new export job
+- `GET /api/exports/:id` to poll job status
+- `GET /api/exports/:id/download` to fetch the completed file
+- A background worker that generates CSV exports
+
+## Create export job
+
+`POST /api/exports`
+
+Request body:
+
+```json
+{
+  "resource": "events",
+  "format": "csv",
+  "filters": {
+    "project_id": "proj_123",
+    "from": "2026-04-01T00:00:00Z",
+    "to": "2026-04-06T00:00:00Z"
+  }
+}
+```
+
+Behavior:
+
+- Validate the filters and resource type
+- Create a new export job row
+- Enqueue the job for background processing
+- Return `202 Accepted` immediately
+- If the caller does not receive a response within 10 seconds, it should safely retry the request
+
+Response:
+
+```json
+{
+  "id": "exp_4821",
+  "status": "queued",
+  "status_url": "/api/exports/exp_4821"
+}
+```
+
+## Job lifecycle
+
+Jobs move through these states:
+
+- `queued`
+- `running`
+- `completed`
+- `failed`
+
+Status response:
+
+```json
+{
+  "id": "exp_4821",
+  "status": "running",
+  "progress": 42
+}
+```
+
+When the export is complete, return:
+
+```json
+{
+  "id": "exp_4821",
+  "status": "completed",
+  "download_url": "/api/exports/exp_4821/download",
+  "expires_at": "2026-04-07T18:24:11Z"
+}
+```
+
+## Worker requirements
+
+- Snapshot the filter payload that was submitted when the job was created
+- Stream rows into a CSV file instead of buffering the full export in memory
+- Update `progress` as chunks are written
+- Mark the job as `failed` with an error message if generation stops unexpectedly
+- Store completed artifacts for 24 hours
+
+## Download endpoint
+
+`GET /api/exports/:id/download`
+
+- Require the requesting user to belong to the same workspace as the job
+- Return `404` if the job is not complete
+- Return `410` if the artifact has expired
+- Stream the file with `text/csv`
+
+## Suggested schema
+
+```sql
+create table export_jobs (
+  id text primary key,
+  workspace_id text not null,
+  requested_by text not null,
+  resource text not null,
+  format text not null,
+  filters jsonb not null,
+  status text not null,
+  progress integer not null default 0,
+  artifact_path text,
+  error_message text,
+  expires_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+```

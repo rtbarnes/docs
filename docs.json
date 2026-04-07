@@ -43,6 +43,14 @@
               "docs/ai-tools/claude-code",
               "docs/ai-tools/windsurf"
             ]
+          },
+          {
+            "group": "Implementation exercises",
+            "pages": [
+              "docs/implementation-exercises/signed-webhooks",
+              "docs/implementation-exercises/async-export-jobs",
+              "docs/implementation-exercises/team-feature-flags"
+            ]
           }
         ]
       },
