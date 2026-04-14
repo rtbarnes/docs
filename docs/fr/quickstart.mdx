@@ -1,0 +1,140 @@
+---
+title: "Démarrage rapide"
+description: "Commencez à créer une documentation de qualité en quelques minutes"
+timestamp: "true"
+mode: "frame"
+---
+
+## Commencez en trois étapes
+
+Lancez votre site de documentation en local pour prévisualiser vos modifications. Le meilleur moyen d'y parvenir est de suivre chaque étape dans l'ordre ; bien poser les bases vous fera gagner du temps par la suite. Assurez-vous de bien comprendre chaque étape avant de passer à la suivante.
+
+### Étape 1 : Configurez votre environnement local
+
+<AccordionGroup>
+  <Accordion title="Clonez votre dépôt en local" icon="copy">
+    Lors du processus d'intégration, vous avez créé un dépôt GitHub avec le contenu de votre documentation (ou vous en aviez déjà un). Vous trouverez un lien vers ce dépôt dans votre [tableau de bord](https://dashboard.mintlify.com).
+
+    Pour cloner le dépôt en local afin de modifier et prévisualiser votre documentation, suivez le guide [Cloner un dépôt](https://docs.github.com/fr/repositories/creating-and-managing-repositories/cloning-a-repository) de la documentation GitHub.
+  </Accordion>
+  <Accordion title="Lancez le serveur de prévisualisation" icon="rectangle-terminal">
+    1. Installez le CLI Mintlify : `npm i -g mint`
+    2. Naviguez vers votre répertoire de documentation et exécutez : `mint dev`
+    3. Ouvrez `http://localhost:3000` pour voir votre documentation en direct !
+
+    <Tip>
+      La prévisualisation se met à jour automatiquement lorsque vous modifiez des fichiers.
+    </Tip>
+  </Accordion>
+</AccordionGroup>
+
+### Étape 2 : Déployez vos modifications
+
+<AccordionGroup>
+  <Accordion title="Installez notre application GitHub" icon="github">
+    Installez l'application GitHub Mintlify depuis votre [tableau de bord](https://dashboard.mintlify.com/settings/organization/github-app).
+
+    Notre application GitHub déploie automatiquement vos modifications sur votre site de documentation, vous n'avez donc pas à gérer les déploiements vous-même.
+  </Accordion>
+  <Accordion title="Personnalisez le nom et les couleurs de votre site" icon="palette">
+    Pour une première modification, mettons à jour le nom et les couleurs de votre site de documentation.
+
+    1. Ouvrez `docs.json` dans votre éditeur.
+    2. Modifiez le champ `"name"` avec le nom de votre projet.
+    3. Mettez à jour les `"colors"` pour correspondre à votre marque.
+    4. Enregistrez et voyez vos modifications instantanément sur `http://localhost:3000`.
+
+    <Tip>
+      Essayez de changer la couleur principale pour voir la différence immédiatement !
+    </Tip>
+  </Accordion>
+</AccordionGroup>
+
+### Étape 3 : Mise en ligne
+
+<Accordion title="Publiez votre documentation" icon="rocket">
+  1. Validez et poussez vos modifications.
+  2. Votre documentation sera mise à jour et en ligne en quelques instants !
+</Accordion>
+
+## Prochaines étapes
+
+Maintenant que votre documentation fonctionne, explorez ces fonctionnalités clés :
+
+| Fonctionnalité      | Description                | Lien                                                       |
+| ------------------- | -------------------------- | ---------------------------------------------------------- |
+| Rédiger du contenu  | Apprenez la syntaxe MDX    | [/essentials/markdown](/essentials/markdown)               |
+| Personnaliser       | Adaptez à votre marque     | [/essentials/settings](/essentials/settings)               |
+| Exemples de code    | Coloration syntaxique      | [/essentials/code](/essentials/code)                       |
+| Documentation API   | Intégration OpenAPI        | [/api-reference/introduction](/api-reference/introduction) |
+
+<CardGroup cols={2}>
+  <Card title="Rédiger du contenu" icon="pen-to-square" href="/essentials/markdown">
+    Apprenez la syntaxe MDX et commencez à rédiger votre documentation.
+  </Card>
+  <Card title="Personnaliser le style" icon="palette" href="/essentials/settings">
+    Adaptez parfaitement votre documentation à votre marque.
+  </Card>
+  <Card title="Ajouter des exemples de code" icon="square-code" href="/essentials/code">
+    Incluez des blocs de code avec coloration syntaxique.
+  </Card>
+  <Card title="Documentation API" icon="code" href="/api-reference/introduction">
+    Générez automatiquement la documentation API à partir de spécifications OpenAPI.
+  </Card>
+</CardGroup>
+
+## Fonctionnalités essentielles
+
+<CardGroup cols={2}>
+  <Card title="Gestion de contenu" icon="file-lines">
+    - Créez et organisez des fichiers MDX
+    - Utilisez le frontmatter pour les métadonnées
+    - Ajoutez des images et des ressources
+    - Structurez avec des titres et des sections
+  </Card>
+  <Card title="Options de personnalisation" icon="sliders">
+    - Configurez les couleurs et l'identité visuelle
+    - Personnalisez la structure de navigation
+    - Ajoutez du CSS et des composants personnalisés
+    - Configurez la recherche
+  </Card>
+  <Card title="Outils pour développeurs" icon="wrench">
+    - Serveur de prévisualisation avec rechargement à chaud
+    - Déploiements automatiques via GitHub
+    - Intégration du contrôle de version
+    - Commandes CLI pour les tâches courantes
+  </Card>
+  <Card title="Fonctionnalités de documentation" icon="book">
+    - Blocs de code avec coloration syntaxique
+    - Documentation API interactive
+    - Recherche et navigation
+    - Design adaptatif mobile
+  </Card>
+</CardGroup>
+
+## Astuces rapides
+
+<CardGroup cols={3}>
+  <Card title="Pour commencer" icon="lightbulb">
+    - Installez le CLI Mintlify globalement
+    - Clonez votre dépôt en local
+    - Exécutez `mint dev` pour prévisualiser
+    - Modifiez et voyez les mises à jour instantanément
+  </Card>
+  <Card title="Bonnes pratiques" icon="star">
+    - Organisez le contenu dans des dossiers
+    - Utilisez des noms de fichiers descriptifs
+    - Rédigez une documentation claire et concise
+    - Testez vos modifications en local d'abord
+  </Card>
+  <Card title="Dépannage" icon="circle-question">
+    - Vérifiez la configuration de `docs.json`
+    - Contrôlez les chemins et les liens
+    - Consultez la console pour les erreurs
+    - Référez-vous à la documentation Mintlify
+  </Card>
+</CardGroup>
+
+<Note>
+  **Besoin d'aide ?** Consultez notre [documentation complète](https://mintlify.com/docs) ou rejoignez notre [communauté](https://mintlify.com/community).
+</Note>
