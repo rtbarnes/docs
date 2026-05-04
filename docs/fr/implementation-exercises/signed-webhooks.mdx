@@ -1,0 +1,97 @@
+---
+title: "Implémenter des webhooks signés"
+description: "Ajoutez la vérification des webhooks entrants pour les événements de facturation."
+icon: "shield-check"
+---
+
+Utilisez ce guide lorsque vous souhaitez qu'un agent de codage ajoute la prise en charge des webhooks signés pour l'API fictive Acorn Billing.
+
+## Ce qu'il faut construire
+
+- Un point de terminaison `POST /api/webhooks/acorn-billing`
+- La vérification de la signature avant toute logique métier
+- La prise en charge de `invoice.paid`, `invoice.failed` et `subscription.canceled`
+- La déduplication des livraisons via l'en-tête de l'identifiant de livraison
+
+## Format de la requête
+
+Acorn Billing envoie des webhooks JSON avec les en-têtes suivants :
+
+- `x-acorn-delivery-id` : identifiant unique de cette tentative de livraison
+- `x-acorn-timestamp` : horodatage Unix en secondes
+- `x-acorn-signature` : empreinte hexadécimale HMAC SHA-256
+
+Le corps de la requête ressemble à ceci :
+
+```json
+{
+  "id": "evt_9f2c0c0d",
+  "type": "invoice.paid",
+  "created_at": "2026-04-01T18:24:11Z",
+  "data": {
+    "invoice_id": "inv_4821",
+    "customer_id": "cus_1942",
+    "amount": 12900,
+    "currency": "usd"
+  }
+}
+```
+
+## Flux de vérification
+
+1. Analysez le corps de la requête JSON.
+2. Construisez la charge utile signée sous la forme `${timestamp}.${JSON.stringify(body)}`.
+3. Calculez l'empreinte attendue avec HMAC SHA-256 et `ACORN_WEBHOOK_SECRET`.
+4. Comparez l'empreinte attendue à `x-acorn-signature` à l'aide d'une comparaison à temps constant.
+5. Rejetez les requêtes dont l'horodatage est antérieur à 5 minutes.
+
+```ts
+import { createHmac, timingSafeEqual } from 'node:crypto';
+
+export function verifyAcornSignature(body: unknown, timestamp: string, signature: string) {
+  const payload = `${timestamp}.${JSON.stringify(body)}`;
+  const expected = createHmac('sha256', process.env.ACORN_WEBHOOK_SECRET!)
+    .update(payload)
+    .digest('hex');
+
+  return timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+}
+```
+
+## Comportement du gestionnaire
+
+- Renvoyez `200 OK` dès que la signature est valide et que l'événement est mis en file d'attente.
+- Stockez `x-acorn-delivery-id` afin que les livraisons en double puissent être ignorées.
+- Acheminez les événements selon le `type`.
+- Ne bloquez pas la réponse du webhook en attendant les appels d'API en aval.
+
+## Règles de gestion des événements
+
+### `invoice.paid`
+
+- Marquez la facture comme payée
+- Ajoutez une entrée dans la chronologie des paiements
+- Envoyez l'e-mail de reçu au client
+
+### `invoice.failed`
+
+- Marquez la facture comme en retard de paiement
+- Planifiez le workflow de notification de nouvelle tentative
+
+### `subscription.canceled`
+
+- Enregistrez l'heure de l'annulation
+- Révoquez l'accès premium à la fin de la période de facturation
+
+## Tests en local
+
+Utilisez cette charge utile avec un signataire local lors de vos tests :
+
+```bash
+curl -X POST http://localhost:3000/api/webhooks/acorn-billing \
+  -H "content-type: application/json" \
+  -H "x-acorn-delivery-id: del_123" \
+  -H "x-acorn-timestamp: 1712426400" \
+  -H "x-acorn-signature: <computed-signature>" \
+  -d '{"id":"evt_9f2c0c0d","type":"invoice.paid","data":{"invoice_id":"inv_4821"}}'
+```

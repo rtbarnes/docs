@@ -110,8 +110,83 @@
               {
                 "group": "Premiers pas",
                 "pages": [
-                  "docs/fr/quickstart"
+                  "docs/fr/index",
+                  "docs/fr/quickstart",
+                  "docs/fr/development"
                 ]
+              },
+              {
+                "group": "Personnalisation",
+                "pages": [
+                  "docs/fr/essentials/settings",
+                  "docs/fr/essentials/navigation"
+                ]
+              },
+              {
+                "group": "Rédaction du contenu",
+                "pages": [
+                  "docs/fr/essentials/markdown",
+                  "docs/fr/essentials/code",
+                  "docs/fr/essentials/images",
+                  "docs/fr/essentials/reusable-snippets"
+                ]
+              },
+              {
+                "group": "Outils d'IA",
+                "pages": [
+                  "docs/fr/ai-tools/cursor",
+                  "docs/fr/ai-tools/claude-code",
+                  "docs/fr/ai-tools/windsurf"
+                ]
+              },
+              {
+                "group": "Exercices d'implémentation",
+                "pages": [
+                  "docs/fr/implementation-exercises/signed-webhooks",
+                  "docs/fr/implementation-exercises/async-export-jobs",
+                  "docs/fr/implementation-exercises/team-feature-flags"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Référence d'API",
+            "groups": [
+              {
+                "group": "Documentation d'API",
+                "pages": [
+                  "docs/fr/api-reference/introduction"
+                ]
+              },
+              {
+                "group": "Tests de référence OpenAPI",
+                "pages": [
+                  "docs/fr/api-reference/openapi-test/index",
+                  "docs/fr/api-reference/openapi-test/relative",
+                  "docs/fr/api-reference/openapi-test/absolute",
+                  "docs/fr/api-reference/openapi-test/same-dir",
+                  "docs/fr/api-reference/openapi-test/remote"
+                ]
+              },
+              {
+                "group": "Exemples de points de terminaison",
+                "pages": [
+                  "docs/fr/api-reference/endpoint/get",
+                  "docs/fr/api-reference/endpoint/create",
+                  "docs/fr/api-reference/endpoint/delete",
+                  "docs/fr/api-reference/endpoint/webhook",
+                  "docs/fr/api-reference/endpoint/search",
+                  "docs/fr/api-reference/endpoint/change-location",
+                  "docs/fr/api-reference/endpoint/hierarchy",
+                  "docs/fr/api-reference/endpoint/get-asset-proof",
+                  "docs/fr/api-reference/endpoint/get-pots"
+                ]
+              },
+              {
+                "group": "Documentation AsyncAPI",
+                "asyncapi": {
+                  "source": "docs/api-reference/asyncapi.json"
+                }
               }
             ]
           }

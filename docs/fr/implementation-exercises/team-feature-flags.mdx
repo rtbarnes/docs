@@ -1,0 +1,97 @@
+---
+title: "Implémenter des feature flags d'équipe"
+description: "Ajoutez des feature flags limités à une équipe avec ciblage par environnement."
+icon: "toggle-on"
+---
+
+Utilisez ce guide lorsque vous souhaitez qu'un agent de codage ajoute des feature flags limités à une équipe pour le produit fictif Acorn Workspace.
+
+## Ce qu'il faut construire
+
+- Un modèle de feature flag avec valeurs par défaut au niveau de l'espace de travail
+- Des surcharges facultatives spécifiques à l'équipe
+- Des surcharges facultatives spécifiques à l'environnement pour `development`, `staging` et `production`
+- Une fonction utilitaire telle que `isFeatureEnabled(flagKey, context)`
+- Des déploiements en pourcentage pour des lancements progressifs
+
+## Modèle de données
+
+Utilisez une structure comme celle-ci :
+
+```ts
+type FeatureFlag = {
+  key: string;
+  enabled: boolean;
+  rolloutPercentage?: number;
+  environment?: 'development' | 'staging' | 'production';
+  teamId?: string;
+};
+```
+
+Vous pouvez stocker plusieurs enregistrements pour la même `key` tant que chacun cible une portée différente.
+
+## Contexte d'évaluation
+
+La fonction utilitaire doit accepter :
+
+```ts
+type EvaluationContext = {
+  workspaceId: string;
+  teamId?: string;
+  environment: 'development' | 'staging' | 'production';
+  userId: string;
+};
+```
+
+## Règles d'évaluation
+
+1. Commencez par le flag au niveau de l'espace de travail.
+2. Vérifiez s'il existe un flag spécifique à l'environnement pour la même clé.
+3. Vérifiez s'il existe un flag spécifique à l'équipe pour la même clé.
+4. Si un flag correspondant a un `rolloutPercentage`, hachez l'`userId` dans un bucket allant de `0` à `99`.
+5. Renvoyez `true` lorsque l'utilisateur tombe dans la fenêtre de déploiement.
+
+## Comportement administrateur
+
+- Les administrateurs produit peuvent créer et modifier les flags
+- Les responsables d'équipe peuvent modifier les surcharges spécifiques à leur propre équipe
+- Les modifications doivent prendre effet sans redémarrer le serveur
+- Les entrées du journal d'audit doivent enregistrer qui a modifié le flag et à quel moment
+
+## Forme de l'API
+
+### Créer un flag
+
+`POST /api/feature-flags`
+
+```json
+{
+  "key": "new-sidebar",
+  "enabled": true,
+  "environment": "production",
+  "teamId": "team_design"
+}
+```
+
+### Évaluer un flag
+
+`POST /api/feature-flags/evaluate`
+
+```json
+{
+  "key": "new-sidebar",
+  "context": {
+    "workspaceId": "ws_123",
+    "teamId": "team_design",
+    "environment": "production",
+    "userId": "user_42"
+  }
+}
+```
+
+## Notes d'implémentation
+
+- Gardez la fonction d'évaluation déterministe pour le même utilisateur et le même flag
+- Mettez en cache l'ensemble de flags actifs pendant une courte période pour réduire les lectures en base de données
+- Renvoyez à la fois le résultat booléen et l'enregistrement du flag correspondant depuis le point de terminaison d'évaluation
+- Ajoutez des tests unitaires autour des limites de déploiement et des identifiants d'équipe manquants

@@ -1,0 +1,117 @@
+---
+title: "Implémenter des tâches d'export asynchrones"
+description: "Construisez un flux d'export CSV par tâches pour les données d'un espace de travail."
+icon: "file-arrow-down"
+---
+
+Utilisez ce guide lorsque vous souhaitez qu'un agent de codage ajoute des tâches d'export en arrière-plan pour le produit fictif Acorn Analytics.
+
+## Ce qu'il faut construire
+
+- `POST /api/exports` pour créer une nouvelle tâche d'export
+- `GET /api/exports/:id` pour interroger le statut de la tâche
+- `GET /api/exports/:id/download` pour récupérer le fichier terminé
+- Un worker en arrière-plan qui génère les exports CSV
+
+## Créer une tâche d'export
+
+`POST /api/exports`
+
+Corps de la requête :
+
+```json
+{
+  "resource": "events",
+  "format": "csv",
+  "filters": {
+    "project_id": "proj_123",
+    "from": "2026-04-01T00:00:00Z",
+    "to": "2026-04-06T00:00:00Z"
+  }
+}
+```
+
+Comportement :
+
+- Validez les filtres et le type de ressource
+- Créez une nouvelle ligne de tâche d'export
+- Mettez la tâche en file d'attente pour un traitement en arrière-plan
+- Renvoyez immédiatement `202 Accepted`
+- Si l'appelant ne reçoit pas de réponse dans les 10 secondes, il doit pouvoir réessayer la requête en toute sécurité
+
+Réponse :
+
+```json
+{
+  "id": "exp_4821",
+  "status": "queued",
+  "status_url": "/api/exports/exp_4821"
+}
+```
+
+## Cycle de vie de la tâche
+
+Les tâches passent par les états suivants :
+
+- `queued`
+- `running`
+- `completed`
+- `failed`
+
+Réponse de statut :
+
+```json
+{
+  "id": "exp_4821",
+  "status": "running",
+  "progress": 42
+}
+```
+
+Lorsque l'export est terminé, renvoyez :
+
+```json
+{
+  "id": "exp_4821",
+  "status": "completed",
+  "download_url": "/api/exports/exp_4821/download",
+  "expires_at": "2026-04-07T18:24:11Z"
+}
+```
+
+## Exigences du worker
+
+- Capturez un instantané de la charge utile de filtre soumise lors de la création de la tâche
+- Diffusez les lignes en flux dans un fichier CSV plutôt que de mettre l'export complet en mémoire
+- Mettez à jour `progress` au fur et à mesure que les morceaux sont écrits
+- Marquez la tâche comme `failed` avec un message d'erreur si la génération s'interrompt de façon inattendue
+- Conservez les artefacts terminés pendant 24 heures
+
+## Point de terminaison de téléchargement
+
+`GET /api/exports/:id/download`
+
+- Exigez que l'utilisateur qui fait la requête appartienne au même espace de travail que la tâche
+- Renvoyez `404` si la tâche n'est pas terminée
+- Renvoyez `410` si l'artefact a expiré
+- Diffusez le fichier avec `text/csv`
+
+## Schéma suggéré
+
+```sql
+create table export_jobs (
+  id text primary key,
+  workspace_id text not null,
+  requested_by text not null,
+  resource text not null,
+  format text not null,
+  filters jsonb not null,
+  status text not null,
+  progress integer not null default 0,
+  artifact_path text,
+  error_message text,
+  expires_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+```
