@@ -152,6 +152,12 @@
                   "docs/fr/implementation-exercises/async-export-jobs",
                   "docs/fr/implementation-exercises/team-feature-flags"
                 ]
+              },
+              {
+                "group": "Divertissement",
+                "pages": [
+                  "docs/fr/star-wars"
+                ]
               }
             ]
           },
