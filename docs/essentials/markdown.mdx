@@ -86,3 +86,31 @@ Mintlify supports [LaTeX](https://www.latex-project.org) through the Latex compo
 ```md
 <Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
 ```
+
+## Accordions
+
+Use nested accordions when a section has a short top-level answer with optional details inside it.
+
+[Jump to common checks](#deployment-troubleshooting:common-checks)
+
+<Accordion title="Deployment troubleshooting" icon="circle-help">
+  Start with the deployment logs and confirm the project is using the expected branch.
+
+  <Accordion title="Common checks" icon="list-checks">
+    - Confirm the latest commit has finished building.
+    - Check that required environment variables are set.
+    - Re-run the deployment after fixing configuration changes.
+  </Accordion>
+</Accordion>
+
+```md
+<Accordion title="Deployment troubleshooting" icon="circle-help">
+  Start with the deployment logs and confirm the project is using the expected branch.
+
+  <Accordion title="Common checks" icon="list-checks">
+    - Confirm the latest commit has finished building.
+    - Check that required environment variables are set.
+    - Re-run the deployment after fixing configuration changes.
+  </Accordion>
+</Accordion>
+```
