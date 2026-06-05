@@ -198,6 +198,74 @@
         }
       }
     },
+    "/academic-standards/search": {
+      "get": {
+        "summary": "Search academic standards",
+        "description": "Searches academic standards by statement code.",
+        "operationId": "searchAcademicStandards",
+        "servers": [
+          {
+            "url": "https://api.learningcommons.org/knowledge-graph/v0"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "statementCode",
+            "in": "query",
+            "description": "The academic standard statement code to search for.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3.NF.A.1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Academic standards search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "statementCode": {
+                            "type": "string",
+                            "example": "3.NF.A.1"
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid query parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/plants": {
       "get": {
         "deprecated": true,
@@ -978,6 +1046,11 @@
       }
     },
     "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
+      },
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
