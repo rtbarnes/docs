@@ -1,0 +1,116 @@
+---
+title: 'Markdown 语法'
+description: '使用标准 markdown 编写文本、标题与样式'
+icon: 'text-size'
+---
+
+## 标题
+
+最适合用作章节标题。
+
+```md
+## Titles
+```
+
+### 子标题
+
+最适合用作小节标题。
+
+```md
+### Subtitles
+```
+
+<Tip>
+
+每个**标题**和**子标题**都会创建一个锚点，并会出现在右侧的目录中。
+
+</Tip>
+
+## 文本格式
+
+我们支持大多数 Markdown 格式。只需在文本两侧添加 `**`、`_` 或 `~` 即可设置格式。
+
+| 样式     | 写法              | 效果            |
+| -------- | ----------------- | --------------- |
+| 加粗     | `**bold**`        | **bold**        |
+| 斜体     | `_italic_`        | _italic_        |
+| 删除线   | `~strikethrough~` | ~strikethrough~ |
+
+你可以将这些组合使用。例如，写 `**_bold and italic_**` 可以得到**_粗斜体_**文本。
+
+要编写上标和下标文本需要使用 HTML，即在文本两侧添加 `<sup>` 或 `<sub>`。
+
+| 文本大小 | 写法                     | 效果                   |
+| -------- | ------------------------ | ---------------------- |
+| 上标     | `<sup>superscript</sup>` | <sup>superscript</sup> |
+| 下标     | `<sub>subscript</sub>`   | <sub>subscript</sub>   |
+
+## 链接到页面
+
+你可以通过将文本包裹在 `[]()` 中来添加链接。例如，写 `[link to google](https://google.com)` 即可生成 [link to google](https://google.com)。
+
+指向文档内页面的链接需要使用根相对路径。也就是说，需要包含完整的文件夹路径。例如，`[link to text](/writing-content/text)` 链接到我们组件部分中名为 "Text" 的页面。
+
+像 `[link to text](../text)` 这样的相对链接打开速度会较慢，因为我们无法轻松地对其进行优化。
+
+## 引用块
+
+### 单行
+
+要创建引用块，请在段落前添加一个 `>`。
+
+> Dorothy followed her through many of the beautiful rooms in her castle.
+
+```md
+> Dorothy followed her through many of the beautiful rooms in her castle.
+```
+
+### 多行
+
+> Dorothy followed her through many of the beautiful rooms in her castle.
+>
+> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
+
+```md
+> Dorothy followed her through many of the beautiful rooms in her castle.
+>
+> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
+```
+
+### LaTeX
+
+Mintlify 通过 Latex 组件支持 [LaTeX](https://www.latex-project.org)。
+
+<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
+
+```md
+<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
+```
+
+## 折叠面板
+
+当某个部分有一个简短的顶层回答，并在其中包含可选细节时，请使用嵌套折叠面板。
+
+[跳转到常见检查](#deployment-troubleshooting:common-checks)
+
+<Accordion title="部署故障排查" icon="circle-help">
+  从部署日志开始，并确认项目使用的是预期的分支。
+
+  <Accordion title="常见检查" icon="list-checks">
+    - 确认最新提交已完成构建。
+    - 检查所需的环境变量是否已设置。
+    - 修复配置更改后，重新运行部署。
+  </Accordion>
+</Accordion>
+
+```md
+<Accordion title="Deployment troubleshooting" icon="circle-help">
+  Start with the deployment logs and confirm the project is using the expected branch.
+
+  <Accordion title="Common checks" icon="list-checks">
+    - Confirm the latest commit has finished building.
+    - Check that required environment variables are set.
+    - Re-run the deployment after fixing configuration changes.
+  </Accordion>
+</Accordion>
+```

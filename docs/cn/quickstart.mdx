@@ -1,0 +1,158 @@
+---
+title: "快速入门"
+description: "几分钟内开始构建出色的文档"
+timestamp: "true"
+mode: "frame"
+de_link: "https://developers.example.de/docs/quickstart"
+fr_link: "https://developers.example.fr/docs/quickstart"
+es_link: "https://developers.example.es/docs/quickstart"
+---
+
+## 三步快速上手
+
+在本地运行你的文档站点以预览改动。最佳方式是按顺序完成每一步;在这里打好基础,后续会事半功倍。确保充分理解每一步后再进行下一步。
+
+### 第 1 步:设置本地环境
+
+<AccordionGroup>
+  <Accordion title="将文档克隆到本地" icon="copy">
+    在引导流程中,如果你之前没有,会为你创建一个包含文档内容的 GitHub 仓库。你可以在[控制台](https://dashboard.mintlify.com)中找到该仓库的链接。
+
+    要将仓库克隆到本地以便进行修改和预览,请参考 GitHub 文档中的[克隆仓库](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)指南。
+  </Accordion>
+  <Accordion title="启动预览服务器" icon="rectangle-terminal">
+    1. 安装 Mintlify CLI:`npm i -g mint`
+    2. 进入你的文档目录并运行:`mint dev`
+    3. 打开 `http://localhost:3000` 查看实时文档!
+
+    <Tip>
+      编辑文件时,预览会自动更新。
+    </Tip>
+  </Accordion>
+</AccordionGroup>
+
+### 第 2 步:部署你的改动
+
+<AccordionGroup>
+  <Accordion title="安装我们的 GitHub 应用" icon="github">
+    从[控制台](https://dashboard.mintlify.com/settings/organization/github-app)安装 Mintlify GitHub 应用。
+
+    我们的 GitHub 应用会自动将你的改动部署到文档站点,你无需自行管理部署流程。
+  </Accordion>
+  <Accordion title="更新站点名称与配色" icon="palette">
+    作为第一次改动,我们来更新文档站点的名称和配色。
+
+    1. 在编辑器中打开 `docs.json`。
+    2. 将 `"name"` 字段改为你的项目名称。
+    3. 更新 `"colors"` 以匹配你的品牌。
+    4. 保存后,在 `http://localhost:3000` 中可即时看到变化。
+
+    <Tip>
+      试着更改主色调,立刻看到效果!
+    </Tip>
+  </Accordion>
+</AccordionGroup>
+
+### 第 3 步:正式上线
+
+<Accordion title="发布你的文档" icon="rocket">
+  1. 提交并推送你的改动。
+  2. 你的文档会在片刻之间更新并上线!
+</Accordion>
+
+hello hello hello
+
+## 下一步
+
+文档运行起来后,继续探索这些关键功能:
+
+| 功能          | 描述              | 链接                                                       |
+| ----------- | --------------- | ---------------------------------------------------------- |
+| 编写内容        | 学习 MDX 语法       | [/essentials/markdown](/essentials/markdown)               |
+| 自定义样式       | 匹配你的品牌          | [/essentials/settings](/essentials/settings)               |
+| 代码示例        | 语法高亮            | [/essentials/code](/essentials/code)                       |
+| API 文档      | OpenAPI 集成      | [/api-reference/introduction](/api-reference/introduction) |
+
+<Note>
+  **示例 XML 订阅源**:<a href="/feed.xml" download>
+   下载 feed.xml</a>
+
+  来查看静态 XML 文件是如何提供服务的。
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="编写内容" icon="pen-to-square" href="/essentials/markdown">
+    学习 MDX 语法并开始编写你的文档。
+  </Card>
+  <Card title="自定义样式" icon="palette" href="/essentials/settings">
+    让你的文档完美契合品牌风格。
+  </Card>
+  <Card title="添加代码示例" icon="square-code" href="/essentials/code">
+    添加带语法高亮的代码块。
+  </Card>
+  <Card title="API 文档" icon="code" href="/api-reference/introduction">
+    从 OpenAPI 规范自动生成 API 文档。
+  </Card>
+  <Card title="获取 Plants API" icon="code" href="/api-reference/endpoint/get">
+    查看 Get Plants 端点文档。
+  </Card>
+  <Card title="用户 API 文档" icon="code" href="api-reference/list-all-users">
+    查看用户 API 文档。
+  </Card>
+</CardGroup>
+
+## 核心功能
+
+<CardGroup cols={2}>
+  <Card title="内容管理" icon="file-lines">
+    - 创建并组织 MDX 文件
+    - 使用 frontmatter 添加元数据
+    - 添加图片和资源
+    - 使用标题和分节进行结构化
+  </Card>
+  <Card title="自定义选项" icon="sliders">
+    - 配置站点配色和品牌元素
+    - 自定义导航结构
+    - 添加自定义 CSS 和组件
+    - 配置搜索功能
+  </Card>
+  <Card title="开发者工具" icon="wrench">
+    - 热重载预览服务器
+    - 通过 GitHub 自动部署
+    - 版本控制集成
+    - 用于常见任务的 CLI 命令
+  </Card>
+  <Card title="文档特性" icon="book">
+    - 带语法高亮的代码块
+    - 交互式 API 文档
+    - 搜索与导航
+    - 移动端自适应设计
+  </Card>
+</CardGroup>
+
+## 快速小贴士
+
+<CardGroup cols={3}>
+  <Card title="入门" icon="lightbulb">
+    - 全局安装 Mintlify CLI
+    - 将仓库克隆到本地
+    - 运行 `mint dev` 进行预览
+    - 修改后即时查看更新
+  </Card>
+  <Card title="最佳实践" icon="star">
+    - 将内容有序组织到文件夹中
+    - 使用具描述性的文件名
+    - 撰写清晰、简明的文档
+    - 先在本地测试你的改动
+  </Card>
+  <Card title="故障排查" icon="circle-question">
+    - 检查 `docs.json` 配置
+    - 验证文件路径和链接
+    - 查看控制台错误信息
+    - 参阅 Mintlify 文档
+  </Card>
+</CardGroup>
+
+<Note>
+  **需要帮助?** 参阅我们的[完整文档](https://mintlify.com/docs)或加入我们的[社区](https://mintlify.com/community)。
+</Note>
