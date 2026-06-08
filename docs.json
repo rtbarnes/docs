@@ -21,7 +21,8 @@
                 "pages": [
                   "docs/index",
                   "docs/quickstart",
-                  "docs/development"
+                  "docs/development",
+                  "docs/star-wars"
                 ]
               },
               {
