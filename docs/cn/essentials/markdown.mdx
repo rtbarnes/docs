@@ -1,0 +1,88 @@
+---
+title: 'Markdown 语法'
+description: '使用标准 Markdown 编排文本、标题和样式'
+icon: 'text-size'
+---
+
+## 标题
+
+最适合用作章节标题。
+
+```md
+## Titles
+```
+
+### 子标题
+
+最适合用作子章节标题。
+
+```md
+### Subtitles
+```
+
+<Tip>
+
+每个**标题**和**子标题**都会生成一个锚点，并出现在右侧的目录中。
+
+</Tip>
+
+## 文本格式
+
+我们支持大多数 Markdown 格式。只需在文本两侧添加 `**`、`_` 或 `~` 即可设置格式。
+
+| 样式       | 写法              | 效果            |
+| ---------- | ----------------- | --------------- |
+| 加粗       | `**bold**`        | **bold**        |
+| 斜体       | `_italic_`        | _italic_        |
+| 删除线     | `~strikethrough~` | ~strikethrough~ |
+
+您可以将它们组合使用。例如，写 `**_bold and italic_**` 可以得到 **_bold and italic_** 文本。
+
+要书写上标和下标文本，需使用 HTML，即在文本两侧添加 `<sup>` 或 `<sub>`。
+
+| 文本尺寸    | 写法                     | 效果                   |
+| ----------- | ------------------------ | ---------------------- |
+| 上标        | `<sup>superscript</sup>` | <sup>superscript</sup> |
+| 下标        | `<sub>subscript</sub>`   | <sub>subscript</sub>   |
+
+## 链接到页面
+
+您可以通过将文本包裹在 `[]()` 中来添加链接。书写 `[link to google](https://google.com)` 即可生成 [link to google](https://google.com)。
+
+文档内部页面链接需要使用根相对路径。基本上，您应当包含完整的文件夹路径。例如，`[link to text](/writing-content/text)` 会链接到我们组件章节中的 "Text" 页面。
+
+诸如 `[link to text](../text)` 的相对链接打开速度会较慢，因为我们无法轻易对其进行优化。
+
+## 引用块
+
+### 单行
+
+要创建引用块，请在段落前添加 `>`。
+
+> Dorothy followed her through many of the beautiful rooms in her castle.
+
+```md
+> Dorothy followed her through many of the beautiful rooms in her castle.
+```
+
+### 多行
+
+> Dorothy followed her through many of the beautiful rooms in her castle.
+>
+> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
+
+```md
+> Dorothy followed her through many of the beautiful rooms in her castle.
+>
+> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
+```
+
+### LaTeX
+
+Mintlify 通过 Latex 组件支持 [LaTeX](https://www.latex-project.org)。
+
+<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
+
+```md
+<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
+```
