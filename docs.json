@@ -244,6 +244,9 @@
       "vscode"
     ]
   },
+  "metadata": {
+    "timestamp": true
+  },
   "footer": {
     "socials": {
       "x": "https://x.com/mintlify",
