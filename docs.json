@@ -21,7 +21,8 @@
                 "pages": [
                   "docs/index",
                   "docs/quickstart",
-                  "docs/development"
+                  "docs/development",
+                  "docs/star-wars"
                 ]
               },
               {
@@ -113,7 +114,8 @@
                 "pages": [
                   "docs/fr/index",
                   "docs/fr/quickstart",
-                  "docs/fr/development"
+                  "docs/fr/development",
+                  "docs/fr/star-wars"
                 ]
               },
               {
