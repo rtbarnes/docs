@@ -1,0 +1,15 @@
+---
+title: 'Explode False Query'
+description: 'Tests comma-delimited OpenAPI array query parameters'
+openapi: 'local-spec.json GET /tweets'
+---
+
+This page tests an array query parameter with `style: form` and `explode: false`.
+
+The playground request should serialize multiple `tweet.fields` values as:
+
+```text
+tweet.fields=author_id,attachments,id,text
+```
+
+It should not serialize the same selection as repeated `tweet.fields` query parameters.

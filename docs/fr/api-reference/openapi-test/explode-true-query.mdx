@@ -1,0 +1,15 @@
+---
+title: 'Requête avec explode true'
+description: 'Teste les paramètres de requête tableau OpenAPI répétés'
+openapi: 'local-spec.json GET /tweets-exploded'
+---
+
+Cette page teste un paramètre de requête tableau avec `style: form` et `explode: true`.
+
+La requête du playground doit sérialiser plusieurs valeurs `tweet.fields` sous forme de paramètres de requête répétés :
+
+```text
+tweet.fields=author_id&tweet.fields=attachments&tweet.fields=id&tweet.fields=text
+```
+
+Utilisez cette page pour comparer avec la version `explode: false`, qui doit sérialiser la même sélection sous forme d'un seul paramètre de requête `tweet.fields` séparé par des virgules.

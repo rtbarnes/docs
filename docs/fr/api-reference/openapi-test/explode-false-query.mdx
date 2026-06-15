@@ -1,0 +1,15 @@
+---
+title: 'Requête avec explode false'
+description: 'Teste les paramètres de requête tableau OpenAPI séparés par des virgules'
+openapi: 'local-spec.json GET /tweets'
+---
+
+Cette page teste un paramètre de requête tableau avec `style: form` et `explode: false`.
+
+La requête du playground doit sérialiser plusieurs valeurs `tweet.fields` comme suit :
+
+```text
+tweet.fields=author_id,attachments,id,text
+```
+
+Elle ne doit pas sérialiser la même sélection sous forme de paramètres de requête `tweet.fields` répétés.

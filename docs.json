@@ -74,6 +74,8 @@
                   "docs/api-reference/openapi-test/relative",
                   "docs/api-reference/openapi-test/absolute",
                   "docs/api-reference/openapi-test/same-dir",
+                  "docs/api-reference/openapi-test/explode-false-query",
+                  "docs/api-reference/openapi-test/explode-true-query",
                   "docs/api-reference/openapi-test/remote"
                 ]
               },
@@ -166,6 +168,8 @@
                   "docs/fr/api-reference/openapi-test/relative",
                   "docs/fr/api-reference/openapi-test/absolute",
                   "docs/fr/api-reference/openapi-test/same-dir",
+                  "docs/fr/api-reference/openapi-test/explode-false-query",
+                  "docs/fr/api-reference/openapi-test/explode-true-query",
                   "docs/fr/api-reference/openapi-test/remote"
                 ]
               },
