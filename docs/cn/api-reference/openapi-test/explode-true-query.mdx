@@ -1,0 +1,15 @@
+---
+title: 'Explode True 查询参数'
+description: '测试重复出现的 OpenAPI 数组查询参数'
+openapi: 'local-spec.json GET /tweets-exploded'
+---
+
+本页面测试使用 `style: form` 和 `explode: true` 的数组查询参数。
+
+Playground 请求应将多个 `tweet.fields` 值序列化为重复的查询参数：
+
+```text
+tweet.fields=author_id&tweet.fields=attachments&tweet.fields=id&tweet.fields=text
+```
+
+可使用本页面与 `explode: false` 版本进行对比，后者应将相同的选择序列化为单个以逗号分隔的 `tweet.fields` 查询参数。

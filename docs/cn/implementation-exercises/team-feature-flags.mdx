@@ -1,0 +1,97 @@
+---
+title: "实现团队特性开关"
+description: "添加按团队范围划分、支持环境定向的特性开关。"
+icon: "toggle-on"
+---
+
+当你希望让编码 agent 为虚构的 Acorn Workspace 产品添加团队级特性开关时，请使用本指南。
+
+## 需要构建的内容
+
+- 一个具有工作区级默认值的特性开关模型
+- 可选的团队级覆盖
+- 针对 `development`、`staging` 和 `production` 的可选环境级覆盖
+- 一个类似 `isFeatureEnabled(flagKey, context)` 的辅助函数
+- 用于渐进式发布的百分比灰度
+
+## 数据模型
+
+使用类似下面的结构：
+
+```ts
+type FeatureFlag = {
+  key: string;
+  enabled: boolean;
+  rolloutPercentage?: number;
+  environment?: 'development' | 'staging' | 'production';
+  teamId?: string;
+};
+```
+
+只要每条记录针对不同的作用域，就可以为同一个 `key` 存储多条记录。
+
+## 评估上下文
+
+辅助函数应当接收：
+
+```ts
+type EvaluationContext = {
+  workspaceId: string;
+  teamId?: string;
+  environment: 'development' | 'staging' | 'production';
+  userId: string;
+};
+```
+
+## 评估规则
+
+1. 从工作区级开关开始。
+2. 检查同一个 key 是否有任何环境级开关。
+3. 检查同一个 key 是否有任何团队级开关。
+4. 如果匹配到的开关带有 `rolloutPercentage`，将 `userId` 哈希到一个 `0` 到 `99` 的桶中。
+5. 当用户落在灰度窗口内时，返回 `true`。
+
+## 管理行为
+
+- 产品管理员可以创建和编辑开关
+- 团队负责人可以编辑其所在团队的团队级覆盖
+- 变更应当无需重启服务器即可生效
+- 审计日志应当记录谁在何时变更了开关
+
+## API 形式
+
+### 创建开关
+
+`POST /api/feature-flags`
+
+```json
+{
+  "key": "new-sidebar",
+  "enabled": true,
+  "environment": "production",
+  "teamId": "team_design"
+}
+```
+
+### 评估开关
+
+`POST /api/feature-flags/evaluate`
+
+```json
+{
+  "key": "new-sidebar",
+  "context": {
+    "workspaceId": "ws_123",
+    "teamId": "team_design",
+    "environment": "production",
+    "userId": "user_42"
+  }
+}
+```
+
+## 实现注意事项
+
+- 对于相同的用户和开关，保持评估辅助函数的确定性
+- 将当前生效的开关集合短期缓存，以减少数据库读取
+- 评估端点应同时返回布尔结果和匹配到的开关记录
+- 围绕灰度边界和缺失的 team ID 添加单元测试

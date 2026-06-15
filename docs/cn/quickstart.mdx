@@ -1,0 +1,158 @@
+---
+title: "快速入门"
+description: "几分钟内开始构建精美的文档"
+timestamp: "true"
+mode: "frame"
+de_link: "https://developers.example.de/docs/quickstart"
+fr_link: "https://developers.example.fr/docs/quickstart"
+es_link: "https://developers.example.es/docs/quickstart"
+---
+
+## 三步开始
+
+让你的文档站点在本地运行起来以便进行更改。最好的方法是按顺序完成每个步骤；在这里打好基础将会受益匪浅。在进入下一步之前，请确保你充分理解当前的步骤。
+
+### 第 1 步：搭建本地环境
+
+<AccordionGroup>
+  <Accordion title="在本地克隆你的文档" icon="copy">
+    在入门流程中，如果你之前还没有，系统会为你创建一个包含文档内容的 GitHub 仓库。你可以在 [dashboard](https://dashboard.mintlify.com) 中找到该仓库的链接。
+
+    要在本地克隆该仓库以便对文档进行更改和预览，请参考 GitHub 文档中的 [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) 指南。
+  </Accordion>
+  <Accordion title="启动预览服务器" icon="rectangle-terminal">
+    1. 安装 Mintlify CLI：`npm i -g mint`
+    2. 导航到你的文档目录并运行：`mint dev`
+    3. 打开 `http://localhost:3000` 即可实时查看你的文档！
+
+    <Tip>
+      当你编辑文件时，预览会自动更新。
+    </Tip>
+  </Accordion>
+</AccordionGroup>
+
+### 第 2 步：部署你的更改
+
+<AccordionGroup>
+  <Accordion title="安装我们的 GitHub 应用" icon="github">
+    从 [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) 安装 Mintlify GitHub 应用。
+
+    我们的 GitHub 应用会自动将你的更改部署到文档站点，因此你无需自己管理部署。
+  </Accordion>
+  <Accordion title="更新你的站点名称和颜色" icon="palette">
+    作为第一个更改，让我们更新文档站点的名称和颜色。
+
+    1. 在编辑器中打开 `docs.json`。
+    2. 将 `"name"` 字段更改为你的项目名称。
+    3. 更新 `"colors"` 使其与你的品牌相匹配。
+    4. 保存后即可在 `http://localhost:3000` 立即看到你的更改。
+
+    <Tip>
+      尝试更改主色调以查看即时效果！
+    </Tip>
+  </Accordion>
+</AccordionGroup>
+
+### 第 3 步：上线发布
+
+<Accordion title="发布你的文档" icon="rocket">
+  1. 提交并推送你的更改。
+  2. 你的文档将在片刻之后更新并上线！
+</Accordion>
+
+hello hello hello
+
+## 后续步骤
+
+现在你的文档已经运行起来了，可以探索这些关键特性：
+
+| 功能         | 描述                | 链接                                                       |
+| --------------- | ------------------- | ---------------------------------------------------------- |
+| 编写内容   | 学习 MDX 语法    | [/essentials/markdown](/essentials/markdown)               |
+| 自定义样式 | 匹配你的品牌    | [/essentials/settings](/essentials/settings)               |
+| 代码示例   | 语法高亮 | [/essentials/code](/essentials/code)                       |
+| API 文档        | OpenAPI 集成 | [/api-reference/introduction](/api-reference/introduction) |
+
+<Note>
+  **示例 XML 订阅源**：<a href="/feed.xml" download>
+   下载 feed.xml</a>
+
+  以了解静态 XML 文件的提供方式。
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="编写内容" icon="pen-to-square" href="/essentials/markdown">
+    学习 MDX 语法并开始编写你的文档。
+  </Card>
+  <Card title="自定义样式" icon="palette" href="/essentials/settings">
+    让你的文档与品牌完美契合。
+  </Card>
+  <Card title="添加代码示例" icon="square-code" href="/essentials/code">
+    包含带有语法高亮的代码块。
+  </Card>
+  <Card title="API 文档" icon="code" href="/api-reference/introduction">
+    根据 OpenAPI 规范自动生成 API 文档。
+  </Card>
+  <Card title="Get Plants API" icon="code" href="/api-reference/endpoint/get">
+    查看 Get Plants 端点的文档。
+  </Card>
+  <Card title="用户 API 文档" icon="code" href="api-reference/list-all-users">
+    查看用户 API 文档。
+  </Card>
+</CardGroup>
+
+## 核心功能
+
+<CardGroup cols={2}>
+  <Card title="内容管理" icon="file-lines">
+    - 创建和组织 MDX 文件
+    - 使用 frontmatter 添加元数据
+    - 添加图片和资源
+    - 通过标题和章节构建结构
+  </Card>
+  <Card title="自定义选项" icon="sliders">
+    - 配置站点颜色和品牌元素
+    - 自定义导航结构
+    - 添加自定义 CSS 和组件
+    - 设置搜索功能
+  </Card>
+  <Card title="开发者工具" icon="wrench">
+    - 热重载预览服务器
+    - 通过 GitHub 自动部署
+    - 版本控制集成
+    - 用于常见任务的 CLI 命令
+  </Card>
+  <Card title="文档功能" icon="book">
+    - 带有语法高亮的代码块
+    - 交互式 API 文档
+    - 搜索和导航
+    - 移动端响应式设计
+  </Card>
+</CardGroup>
+
+## 快速提示
+
+<CardGroup cols={3}>
+  <Card title="入门指南" icon="lightbulb">
+    - 全局安装 Mintlify CLI
+    - 在本地克隆你的仓库
+    - 运行 `mint dev` 进行预览
+    - 进行更改并即时查看更新
+  </Card>
+  <Card title="最佳实践" icon="star">
+    - 在文件夹中有序组织内容
+    - 使用描述性的文件名
+    - 编写清晰、简洁的文档
+    - 在本地首先测试你的更改
+  </Card>
+  <Card title="故障排查" icon="circle-question">
+    - 检查你的 `docs.json` 配置
+    - 验证文件路径和链接
+    - 检查控制台中的错误
+    - 查阅 Mintlify 文档
+  </Card>
+</CardGroup>
+
+<Note>
+  **需要帮助？** 查看我们的 [完整文档](https://mintlify.com/docs) 或加入我们的 [社区](https://mintlify.com/community)。
+</Note>

@@ -1,0 +1,15 @@
+---
+title: 'Explode False 查询参数'
+description: '测试以逗号分隔的 OpenAPI 数组查询参数'
+openapi: 'local-spec.json GET /tweets'
+---
+
+本页面测试使用 `style: form` 和 `explode: false` 的数组查询参数。
+
+Playground 请求应将多个 `tweet.fields` 值序列化为：
+
+```text
+tweet.fields=author_id,attachments,id,text
+```
+
+而不应将相同的选择序列化为多个重复的 `tweet.fields` 查询参数。

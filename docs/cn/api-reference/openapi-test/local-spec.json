@@ -1,0 +1,103 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Local Same-Dir API",
+    "description": "Spec colocated with MDX page",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "https://api.example.com" }],
+  "paths": {
+    "/items": {
+      "get": {
+        "summary": "List items",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "type": "object", "properties": { "id": { "type": "string" } } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets": {
+      "get": {
+        "summary": "Search tweets",
+        "description": "Tests comma-delimited query serialization for multi-value fields parameters.",
+        "parameters": [
+          {
+            "name": "tweet.fields",
+            "in": "query",
+            "description": "Select tweet fields. With form style and explode disabled, multiple selected values should serialize as `tweet.fields=author_id,attachments,id,text`.",
+            "required": false,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["author_id", "attachments", "id", "text"]
+              }
+            },
+            "example": ["author_id", "attachments", "id", "text"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "type": "object", "properties": { "id": { "type": "string" } } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets-exploded": {
+      "get": {
+        "summary": "Search tweets with exploded fields",
+        "description": "Tests repeated query parameter serialization for multi-value fields parameters.",
+        "parameters": [
+          {
+            "name": "tweet.fields",
+            "in": "query",
+            "description": "Select tweet fields. With form style and explode enabled, multiple selected values should serialize as repeated `tweet.fields` query parameters.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["author_id", "attachments", "id", "text"]
+              }
+            },
+            "example": ["author_id", "attachments", "id", "text"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "type": "object", "properties": { "id": { "type": "string" } } }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
