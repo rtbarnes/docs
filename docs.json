@@ -20,8 +20,8 @@
                 "group": "Getting started",
                 "pages": [
                   "docs/index",
-                  "docs/quickstart",
-                  "docs/development"
+                  "docs/development",
+                  "docs/quickstart"
                 ]
               },
               {
