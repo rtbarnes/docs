@@ -55,6 +55,12 @@
                   "docs/implementation-exercises/async-export-jobs",
                   "docs/implementation-exercises/team-feature-flags"
                 ]
+              },
+              {
+                "group": "Fun",
+                "pages": [
+                  "docs/star-wars"
+                ]
               }
             ]
           },
@@ -148,6 +154,12 @@
                   "docs/fr/implementation-exercises/signed-webhooks",
                   "docs/fr/implementation-exercises/async-export-jobs",
                   "docs/fr/implementation-exercises/team-feature-flags"
+                ]
+              },
+              {
+                "group": "Divertissement",
+                "pages": [
+                  "docs/fr/star-wars"
                 ]
               }
             ]
