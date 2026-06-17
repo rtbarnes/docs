@@ -197,6 +197,97 @@
             ]
           }
         ]
+      },
+      {
+        "language": "cn",
+        "tabs": [
+          {
+            "tab": "指南",
+            "groups": [
+              {
+                "group": "入门",
+                "pages": [
+                  "docs/cn/index",
+                  "docs/cn/quickstart",
+                  "docs/cn/development"
+                ]
+              },
+              {
+                "group": "自定义",
+                "pages": [
+                  "docs/cn/essentials/settings",
+                  "docs/cn/essentials/navigation"
+                ]
+              },
+              {
+                "group": "编写内容",
+                "pages": [
+                  "docs/cn/essentials/markdown",
+                  "docs/cn/essentials/code",
+                  "docs/cn/essentials/images",
+                  "docs/cn/essentials/reusable-snippets"
+                ]
+              },
+              {
+                "group": "AI 工具",
+                "pages": [
+                  "docs/cn/ai-tools/cursor",
+                  "docs/cn/ai-tools/claude-code",
+                  "docs/cn/ai-tools/windsurf"
+                ]
+              },
+              {
+                "group": "实施练习",
+                "pages": [
+                  "docs/cn/implementation-exercises/signed-webhooks",
+                  "docs/cn/implementation-exercises/async-export-jobs",
+                  "docs/cn/implementation-exercises/team-feature-flags"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API 参考",
+            "groups": [
+              {
+                "group": "API 文档",
+                "pages": [
+                  "docs/cn/api-reference/introduction"
+                ]
+              },
+              {
+                "group": "OpenAPI 参考测试",
+                "pages": [
+                  "docs/cn/api-reference/openapi-test/index",
+                  "docs/cn/api-reference/openapi-test/relative",
+                  "docs/cn/api-reference/openapi-test/absolute",
+                  "docs/cn/api-reference/openapi-test/same-dir",
+                  "docs/cn/api-reference/openapi-test/remote"
+                ]
+              },
+              {
+                "group": "端点示例",
+                "pages": [
+                  "docs/cn/api-reference/endpoint/get",
+                  "docs/cn/api-reference/endpoint/create",
+                  "docs/cn/api-reference/endpoint/delete",
+                  "docs/cn/api-reference/endpoint/webhook",
+                  "docs/cn/api-reference/endpoint/search",
+                  "docs/cn/api-reference/endpoint/change-location",
+                  "docs/cn/api-reference/endpoint/hierarchy",
+                  "docs/cn/api-reference/endpoint/get-asset-proof",
+                  "docs/cn/api-reference/endpoint/get-pots"
+                ]
+              },
+              {
+                "group": "AsyncAPI 文档",
+                "asyncapi": {
+                  "source": "docs/api-reference/asyncapi.json"
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "global": {
