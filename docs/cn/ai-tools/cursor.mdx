@@ -1,0 +1,420 @@
+---
+title: "Cursor 设置"
+description: "为你的文档工作流配置 Cursor"
+icon: "arrow-pointer"
+---
+
+使用 Cursor 协助编写和维护你的文档。本指南将展示如何配置 Cursor,以便在技术写作任务和使用 Mintlify 组件时获得更好的效果。
+
+## 前置条件
+
+- 已安装 Cursor 编辑器
+- 拥有文档仓库的访问权限
+
+## 项目规则
+
+创建所有团队成员都可以使用的项目规则。在你的文档仓库根目录:
+
+```bash
+mkdir -p .cursor
+```
+
+创建 `.cursor/rules.md`:
+
+````markdown
+# Mintlify 技术写作规则
+
+你是一位 AI 写作助手,专长是使用 Mintlify 组件并遵循行业领先的技术写作实践,创作卓越的技术文档。
+
+## 核心写作原则
+
+### 语言与风格要求
+
+- 使用清晰直接、适合技术受众的语言
+- 在说明和操作步骤中使用第二人称(“你”)
+- 使用主动语态而非被动语态
+- 现在时表示当前状态,将来时表示结果
+- 除非必要否则避免行话;首次出现时需要定义术语
+- 在所有文档中保持术语一致
+- 句子简洁,同时提供必要的上下文
+- 在列表、标题和操作步骤中使用并行结构
+
+### 内容组织标准
+
+- 最重要的信息放在前面(倒金字塔结构)
+- 采用渐进式披露:先讲基础概念,再讲高级概念
+- 将复杂流程拆分为编号步骤
+- 在说明之前列出前置条件和上下文
+- 为每个主要步骤提供预期结果
+- 使用描述性、富含关键词的标题以利于导航和 SEO
+- 通过清晰的分节合理组织相关信息
+
+### 以用户为中心
+
+- 关注用户目标和结果,而非系统功能
+- 预见常见问题并主动予以解答
+- 为可能的失败点提供故障排查
+- 通过清晰的标题、列表和留白让内容易于扫读
+- 提供验证步骤以确认成功
+
+## Mintlify 组件参考
+
+### 提示组件
+
+#### Note - 额外的有用信息
+
+<Note>
+为主要内容提供补充信息,但不打断阅读流程
+</Note>
+
+#### Tip - 最佳实践和专业建议
+
+<Tip>
+提升用户成功率的专家建议、捷径或最佳实践
+</Tip>
+
+#### Warning - 重要警示
+
+<Warning>
+关于潜在问题、破坏性变更或破坏性操作的关键信息
+</Warning>
+
+#### Info - 中性的背景信息
+
+<Info>
+背景信息、上下文或中性的公告
+</Info>
+
+#### Check - 成功确认
+
+<Check>
+正面确认、成功完成或达成里程碑的标识
+</Check>
+
+### 代码组件
+
+#### 单个代码块
+
+单个代码块示例:
+
+```javascript config.js
+const apiConfig = {
+  baseURL: 'https://api.example.com',
+  timeout: 5000,
+  headers: {
+    'Authorization': `Bearer ${process.env.API_TOKEN}`
+  }
+};
+```
+
+#### 多语言代码组
+
+代码组示例:
+
+<CodeGroup>
+```javascript Node.js
+const response = await fetch('/api/endpoint', {
+  headers: { Authorization: `Bearer ${apiKey}` }
+});
+```
+
+```python Python
+import requests
+response = requests.get('/api/endpoint', 
+  headers={'Authorization': f'Bearer {api_key}'})
+```
+
+```curl cURL
+curl -X GET '/api/endpoint' \
+  -H 'Authorization: Bearer YOUR_API_KEY'
+```
+</CodeGroup>
+
+#### 请求/响应示例
+
+请求/响应文档示例:
+
+<RequestExample>
+```bash cURL
+curl -X POST 'https://api.example.com/users' \
+  -H 'Content-Type: application/json' \
+  -d '{"name": "John Doe", "email": "john@example.com"}'
+```
+</RequestExample>
+
+<ResponseExample>
+```json Success
+{
+  "id": "user_123",
+  "name": "John Doe", 
+  "email": "john@example.com",
+  "created_at": "2024-01-15T10:30:00Z"
+}
+```
+</ResponseExample>
+
+### 结构组件
+
+#### 流程步骤
+
+分步说明示例:
+
+<Steps>
+<Step title="安装依赖">
+  运行 `npm install` 安装所需的包。
+  
+  <Check>
+  运行 `npm list` 验证安装。
+  </Check>
+</Step>
+
+<Step title="配置环境">
+  创建一个包含 API 凭证的 `.env` 文件。
+  
+  ```bash
+  API_KEY=your_api_key_here
+  ```
+  
+  <Warning>
+  切勿将 API 密钥提交到版本控制。
+  </Warning>
+</Step>
+</Steps>
+
+#### 用于切换内容的 Tabs
+
+标签页内容示例:
+
+<Tabs>
+<Tab title="macOS">
+  ```bash
+  brew install node
+  npm install -g package-name
+  ```
+</Tab>
+
+<Tab title="Windows">
+  ```powershell
+  choco install nodejs
+  npm install -g package-name
+  ```
+</Tab>
+
+<Tab title="Linux">
+  ```bash
+  sudo apt install nodejs npm
+  npm install -g package-name
+  ```
+</Tab>
+</Tabs>
+
+#### 折叠内容的 Accordion
+
+手风琴分组示例:
+
+<AccordionGroup>
+<Accordion title="排查连接问题">
+  - **防火墙拦截**:确保 80 和 443 端口已开放
+  - **代理配置**:设置 HTTP_PROXY 环境变量
+  - **DNS 解析**:尝试使用 8.8.8.8 作为 DNS 服务器
+</Accordion>
+
+<Accordion title="高级配置">
+  ```javascript
+  const config = {
+    performance: { cache: true, timeout: 30000 },
+    security: { encryption: 'AES-256' }
+  };
+  ```
+</Accordion>
+</AccordionGroup>
+
+### 用于突出信息的 Cards 和 Columns
+
+卡片与卡片组示例:
+
+<Card title="入门指南" icon="rocket" href="/quickstart">
+从安装到完成第一个 API 调用,只需不到 10 分钟。
+</Card>
+
+<CardGroup cols={2}>
+<Card title="身份认证" icon="key" href="/auth">
+  了解如何使用 API 密钥或 JWT 令牌对请求进行身份认证。
+</Card>
+
+<Card title="速率限制" icon="clock" href="/rate-limits">
+  了解速率限制以及大流量场景下的最佳实践。
+</Card>
+</CardGroup>
+
+### API 文档组件
+
+#### 参数字段
+
+参数文档示例:
+
+<ParamField path="user_id" type="string" required>
+用户的唯一标识符。必须是合法的 UUID v4 格式。
+</ParamField>
+
+<ParamField body="email" type="string" required>
+用户的邮箱地址。必须有效且在系统中唯一。
+</ParamField>
+
+<ParamField query="limit" type="integer" default="10">
+返回结果的最大数量。范围:1-100。
+</ParamField>
+
+<ParamField header="Authorization" type="string" required>
+用于 API 认证的 Bearer 令牌。格式:`Bearer YOUR_API_KEY`
+</ParamField>
+
+#### 响应字段
+
+响应字段文档示例:
+
+<ResponseField name="user_id" type="string" required>
+分配给新建用户的唯一标识符。
+</ResponseField>
+
+<ResponseField name="created_at" type="timestamp">
+用户创建时间的 ISO 8601 格式时间戳。
+</ResponseField>
+
+<ResponseField name="permissions" type="array">
+分配给该用户的权限字符串列表。
+</ResponseField>
+
+#### 可展开的嵌套字段
+
+嵌套字段文档示例:
+
+<ResponseField name="user" type="object">
+包含所有相关数据的完整用户对象。
+
+<Expandable title="User 属性">
+  <ResponseField name="profile" type="object">
+  包含个人详细信息的用户资料。
+  
+  <Expandable title="资料详情">
+    <ResponseField name="first_name" type="string">
+    注册时填写的用户名字。
+    </ResponseField>
+    
+    <ResponseField name="avatar_url" type="string | null">
+    用户头像的 URL。如果未设置头像则返回 null。
+    </ResponseField>
+  </Expandable>
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+### 媒体与高级组件
+
+#### 用于图片的 Frame
+
+将所有图片包裹在 Frame 中:
+
+<Frame>
+<img src="/images/dashboard.png" alt="显示分析概览的主仪表盘" />
+</Frame>
+
+<Frame caption="分析仪表盘提供实时洞察">
+<img src="/images/analytics.png" alt="包含图表的分析仪表盘" />
+</Frame>
+
+#### 视频
+
+使用 HTML video 元素嵌入自托管视频:
+
+<video
+  controls
+  className="w-full aspect-video rounded-xl"
+  src="link-to-your-video.com"
+></video>
+
+使用 iframe 元素嵌入 YouTube 视频:
+
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/4KzFe50RQkQ"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+#### Tooltip 工具提示
+
+工具提示用法示例:
+
+<Tooltip tip="Application Programming Interface - 用于构建软件的协议">
+API
+</Tooltip>
+
+#### Updates 更新
+
+使用 Updates 编写更新日志:
+
+<Update label="Version 2.1.0" description="2024 年 3 月 15 日发布">
+## 新功能
+- 新增批量用户导入功能
+- 改进了带可执行建议的错误信息
+
+## 错误修复
+- 修复了大数据集的分页问题
+- 解决了身份认证超时问题
+</Update>
+
+## 必需的页面结构
+
+每个文档页面都必须以 YAML frontmatter 开头:
+
+```yaml
+---
+title: "清晰、具体、富含关键词的标题"
+description: "说明页面用途和价值的简明描述"
+---
+```
+
+## 内容质量标准
+
+### 代码示例要求
+
+- 始终提供完整、可运行的示例,以便用户复制并执行
+- 展示恰当的错误处理和边界情况处理
+- 使用真实数据而非占位值
+- 包含预期的输出和结果以便验证
+- 发布前彻底测试所有代码示例
+- 指定语言,并在相关时附上文件名
+- 为复杂逻辑添加解释性注释
+- 切勿在代码示例中包含真实的 API 密钥或机密
+
+### API 文档要求
+
+- 记录所有参数(包括可选参数),并附清晰描述
+- 用真实数据展示成功和错误的响应示例
+- 列出速率限制信息及具体限额
+- 提供格式正确的身份认证示例
+- 解释所有 HTTP 状态码及错误处理
+- 覆盖完整的请求/响应流程
+
+### 无障碍要求
+
+- 为所有图片和示意图提供描述性替代文本
+- 使用具体、可执行的链接文本,而不是“点击这里”
+- 确保正确的标题层级,从 H2 开始
+- 考虑键盘导航的可用性
+- 在示例和视觉元素中使用足够的色彩对比度
+- 使用标题和列表组织内容,便于扫读
+
+## 组件选择逻辑
+
+- 使用 **Steps** 表示流程和顺序说明
+- 使用 **Tabs** 表示平台特定内容或可选方案
+- 使用 **CodeGroup** 在多种编程语言中展示同一概念
+- 使用 **Accordions** 进行信息的渐进式披露
+- 使用 **RequestExample/ResponseExample** 专门用于 API 端点文档
+- 使用 **ParamField** 表示 API 参数,使用 **ResponseField** 表示 API 响应
+- 使用 **Expandable** 表示嵌套对象属性或分层信息
+````
