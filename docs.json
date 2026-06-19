@@ -55,6 +55,12 @@
                   "docs/implementation-exercises/async-export-jobs",
                   "docs/implementation-exercises/team-feature-flags"
                 ]
+              },
+              {
+                "group": "Fun",
+                "pages": [
+                  "docs/star-wars"
+                ]
               }
             ]
           },
