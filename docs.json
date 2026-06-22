@@ -155,6 +155,12 @@
                   "docs/fr/implementation-exercises/async-export-jobs",
                   "docs/fr/implementation-exercises/team-feature-flags"
                 ]
+              },
+              {
+                "group": "Anecdotes du Seigneur des Anneaux",
+                "pages": [
+                  "docs/fr/trivia/the-hobbit-began-as-a-bedtime-story"
+                ]
               }
             ]
           },
