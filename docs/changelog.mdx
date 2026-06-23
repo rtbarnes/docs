@@ -1,0 +1,75 @@
+---
+title: "Changelog"
+description: "Test changelog entries for generated entry subpages."
+rss: true
+---
+
+<Update
+  id="entry-pages-beta"
+  slug="entry-pages-beta"
+  label="Entry pages beta"
+  tags={["Feature", "Changelog"]}
+  rss={{
+    title: "Entry pages beta",
+    description: "Dedicated changelog entry pages can now be generated from Update blocks."
+  }}
+>
+## Dedicated URLs for each update
+
+This entry should generate a detail page at `/docs/changelog/entry-pages-beta`.
+
+Use it to verify:
+
+- the aggregate changelog still renders at `/docs/changelog`
+- the update heading links to `/docs/changelog/entry-pages-beta`
+- the detail page renders this body content
+- the detail page has back, previous, and next navigation
+</Update>
+
+<Update
+  id="rss-links"
+  slug="rss-links"
+  label="RSS links use detail pages"
+  description="RSS items should point to generated changelog entry pages when entry pages are enabled."
+  tags={["RSS", "Changelog"]}
+  rss={{
+    title: "RSS links use detail pages",
+    description: "RSS items should point to generated changelog entry pages when entry pages are enabled."
+  }}
+>
+## RSS item URL coverage
+
+This entry should generate a detail page at `/docs/changelog/rss-links`.
+
+After prebuild or deployment, inspect the generated RSS feed and confirm this
+item links to the detail page instead of the aggregate page anchor.
+
+```json
+{
+  "expectedPath": "/docs/changelog/rss-links"
+}
+```
+</Update>
+
+<Update
+  id="cleanup-check"
+  slug="cleanup-check"
+  label="Cleanup check"
+  description="Rename or remove this entry to verify stale generated pages are cleaned up."
+  tags={["Cleanup"]}
+  rss={{
+    title: "Cleanup check",
+    description: "Rename or remove this entry to verify stale generated pages are cleaned up."
+  }}
+>
+## Stale generated page cleanup
+
+This entry should generate a detail page at `/docs/changelog/cleanup-check`.
+
+Use this entry for mutation testing:
+
+- change `slug` to `cleanup-check-renamed`
+- run the docs build or deployment again
+- confirm `/docs/changelog/cleanup-check` disappears
+- confirm `/docs/changelog/cleanup-check-renamed` exists
+</Update>
