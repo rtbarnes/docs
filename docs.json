@@ -64,6 +64,12 @@
                   "docs/implementation-exercises/async-export-jobs",
                   "docs/implementation-exercises/team-feature-flags"
                 ]
+              },
+              {
+                "group": "Trivia",
+                "pages": [
+                  "docs/trivia/origami-unicorn"
+                ]
               }
             ]
           },
@@ -157,6 +163,12 @@
                   "docs/fr/implementation-exercises/signed-webhooks",
                   "docs/fr/implementation-exercises/async-export-jobs",
                   "docs/fr/implementation-exercises/team-feature-flags"
+                ]
+              },
+              {
+                "group": "Anecdotes",
+                "pages": [
+                  "docs/fr/trivia/origami-unicorn"
                 ]
               }
             ]
