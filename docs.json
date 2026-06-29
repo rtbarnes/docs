@@ -34,6 +34,12 @@
                 ]
               },
               {
+                "group": "Star Wars",
+                "pages": [
+                  "docs/star-wars"
+                ]
+              },
+              {
                 "group": "Customization",
                 "pages": [
                   "docs/essentials/settings",
