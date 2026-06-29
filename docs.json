@@ -34,6 +34,12 @@
                 ]
               },
               {
+                "group": "Trivia",
+                "pages": [
+                  "docs/trivia/blade-runner"
+                ]
+              },
+              {
                 "group": "Customization",
                 "pages": [
                   "docs/essentials/settings",
