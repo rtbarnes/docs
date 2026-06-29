@@ -1,0 +1,71 @@
+---
+title: '图片和嵌入'
+description: '添加图片、视频以及其他 HTML 元素'
+icon: 'image'
+---
+
+<img
+  style={{ borderRadius: '0.5rem' }}
+  src="https://mintlify-assets.b-cdn.net/bigbend.jpg"
+/>
+
+## 图标图片源
+
+在行内使用本地图片源：<Icon src="/images/custom-logo.png" />，并将其与现有的内置图标路径进行比较：<Icon icon="image" />。
+
+在行内使用远程图片源：<Icon src="https://mintlify-assets.b-cdn.net/bigbend.jpg" />。
+
+```md
+<Icon src="/images/custom-logo.png" />
+<Icon src="https://mintlify-assets.b-cdn.net/bigbend.jpg" />
+<Icon icon="image" />
+```
+
+## 图片
+
+### 使用 Markdown
+
+[markdown 语法](https://www.markdownguide.org/basic-syntax/#images)允许你使用以下代码添加图片：
+
+```md
+![title](/path/image.jpg)
+```
+
+请注意，图片文件大小必须小于 5MB。否则，我们建议将其托管在 [Cloudinary](https://cloudinary.com/) 或 [S3](https://aws.amazon.com/s3/) 这样的服务上。然后你可以使用该 URL 并进行嵌入。
+
+### 使用嵌入
+
+要获得更高的图片自定义能力，你也可以使用[嵌入](/writing-content/embed)来添加图片：
+
+```html
+<img height="200" src="/path/image.jpg" />
+```
+
+## 嵌入和 HTML 元素
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/4KzFe50RQkQ"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+  style={{ width: '100%', borderRadius: '0.5rem' }}
+></iframe>
+
+<br />
+
+<Tip>
+
+Mintlify 支持 [Markdown 中的 HTML 标签](https://www.markdownguide.org/basic-syntax/#html)。如果你更喜欢使用 HTML 标签而非 Markdown 语法，这会很有帮助，并让你能够灵活无限地创建文档。
+
+</Tip>
+
+### iFrames
+
+在文档中加载另一个 HTML 页面。最常用于嵌入视频。
+
+```html
+<iframe src="https://www.youtube.com/embed/4KzFe50RQkQ"> </iframe>
+```

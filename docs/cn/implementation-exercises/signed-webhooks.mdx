@@ -1,0 +1,97 @@
+---
+title: "实现签名 webhooks"
+description: "为账单事件添加入站 webhook 校验。"
+icon: "shield-check"
+---
+
+当你希望让编码 agent 为虚构的 Acorn Billing API 添加签名 webhook 支持时，请使用本指南。
+
+## 需要构建的内容
+
+- 一个 `POST /api/webhooks/acorn-billing` 端点
+- 在任何业务逻辑运行前进行签名校验
+- 支持 `invoice.paid`、`invoice.failed` 以及 `subscription.canceled`
+- 使用投递 ID 请求头进行投递去重
+
+## 请求格式
+
+Acorn Billing 发送的 JSON webhook 带有以下请求头：
+
+- `x-acorn-delivery-id`：本次投递尝试的唯一 ID
+- `x-acorn-timestamp`：以秒为单位的 Unix 时间戳
+- `x-acorn-signature`：HMAC SHA-256 的十六进制摘要
+
+请求体看起来像这样：
+
+```json
+{
+  "id": "evt_9f2c0c0d",
+  "type": "invoice.paid",
+  "created_at": "2026-04-01T18:24:11Z",
+  "data": {
+    "invoice_id": "inv_4821",
+    "customer_id": "cus_1942",
+    "amount": 12900,
+    "currency": "usd"
+  }
+}
+```
+
+## 校验流程
+
+1. 解析 JSON 请求体。
+2. 将签名负载构建为 `${timestamp}.${JSON.stringify(body)}`。
+3. 使用 HMAC SHA-256 和 `ACORN_WEBHOOK_SECRET` 计算预期的摘要。
+4. 使用常量时间比较，将预期摘要与 `x-acorn-signature` 进行比较。
+5. 拒绝时间戳超过 5 分钟的请求。
+
+```ts
+import { createHmac, timingSafeEqual } from 'node:crypto';
+
+export function verifyAcornSignature(body: unknown, timestamp: string, signature: string) {
+  const payload = `${timestamp}.${JSON.stringify(body)}`;
+  const expected = createHmac('sha256', process.env.ACORN_WEBHOOK_SECRET!)
+    .update(payload)
+    .digest('hex');
+
+  return timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+}
+```
+
+## 处理器行为
+
+- 一旦签名有效且事件已入队，立即返回 `200 OK`。
+- 存储 `x-acorn-delivery-id`，以便忽略重复投递。
+- 按 `type` 路由事件。
+- 不要让 webhook 响应等待下游 API 调用。
+
+## 事件处理规则
+
+### `invoice.paid`
+
+- 将发票标记为已支付
+- 添加一条支付时间线记录
+- 向客户发送收据邮件
+
+### `invoice.failed`
+
+- 将发票标记为逾期
+- 调度重试通知工作流
+
+### `subscription.canceled`
+
+- 记录取消时间
+- 在计费周期结束时撤销高级访问权限
+
+## 本地测试
+
+在本地测试时，使用以下负载配合本地签名器：
+
+```bash
+curl -X POST http://localhost:3000/api/webhooks/acorn-billing \
+  -H "content-type: application/json" \
+  -H "x-acorn-delivery-id: del_123" \
+  -H "x-acorn-timestamp: 1712426400" \
+  -H "x-acorn-signature: <computed-signature>" \
+  -d '{"id":"evt_9f2c0c0d","type":"invoice.paid","data":{"invoice_id":"inv_4821"}}'
+```

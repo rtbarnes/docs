@@ -1,0 +1,35 @@
+---
+title: '简介 (Reed Docs)'
+description: '用于展示 API 端点的示例章节'
+de_link: "https://developers.example.de/docs/api-reference/introduction"
+fr_link: "https://developers.example.fr/docs/api-reference/introduction"
+es_link: "https://developers.example.es/docs/api-reference/introduction"
+---
+
+<Note>
+  如果你不打算构建 API 参考文档,可以删除 api-reference 文件夹以移除本章节。
+</Note>
+
+## 欢迎
+
+构建 API 文档有两种方式:[OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) 和 [MDX 组件](https://mintlify.com/docs/api-playground/mdx/configuration)。在此入门套件中,我们使用了以下 OpenAPI 规范。
+
+<Card
+  title="Plant Store Endpoints"
+  icon="leaf"
+  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+>
+  查看 OpenAPI 规范文件
+</Card>
+
+## 身份验证
+
+所有 API 端点都使用 Bearer 令牌进行身份验证,并从规范文件中获取。
+
+```json
+"security": [
+  {
+    "bearerAuth": []
+  }
+]
+```

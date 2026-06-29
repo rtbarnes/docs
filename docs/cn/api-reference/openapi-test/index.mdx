@@ -1,0 +1,13 @@
+---
+title: 'OpenAPI 引用测试'
+description: '针对不同 OpenAPI 规范引用方式的测试集'
+---
+
+本节用于测试 OpenAPI 规范引用：
+
+- **相对路径** – `openapi/openapi-example.json`（相对于项目根目录的路径）
+- **绝对路径** – `/openapi/openapi-example.json`（从仓库根目录开始的绝对路径）
+- **同目录** – `docs/api-reference/openapi-test/local-spec.json`（规范与 MDX 位于同一目录）
+- **Explode false 查询** – `tweet.fields` 数组查询参数序列化为以逗号分隔的值
+- **Explode true 查询** – `tweet.fields` 数组查询参数序列化为重复的参数
+- **远程** – `https://petstore3.swagger.io/api/v3/openapi.json`（托管 URL）

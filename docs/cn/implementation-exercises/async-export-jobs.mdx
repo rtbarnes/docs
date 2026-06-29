@@ -1,0 +1,117 @@
+---
+title: "实现异步导出任务"
+description: "为工作区数据构建基于任务的 CSV 导出流程。"
+icon: "file-arrow-down"
+---
+
+当你希望让编码 agent 为虚构的 Acorn Analytics 产品添加后台导出任务时，请使用本指南。
+
+## 需要构建的内容
+
+- `POST /api/exports`，用于创建新的导出任务
+- `GET /api/exports/:id`，用于轮询任务状态
+- `GET /api/exports/:id/download`，用于获取已完成的文件
+- 一个用于生成 CSV 导出的后台 worker
+
+## 创建导出任务
+
+`POST /api/exports`
+
+请求体：
+
+```json
+{
+  "resource": "events",
+  "format": "csv",
+  "filters": {
+    "project_id": "proj_123",
+    "from": "2026-04-01T00:00:00Z",
+    "to": "2026-04-06T00:00:00Z"
+  }
+}
+```
+
+行为：
+
+- 校验 filters 和 resource 类型
+- 创建一条新的导出任务记录
+- 将任务入队以便后台处理
+- 立即返回 `202 Accepted`
+- 如果调用方在 10 秒内没有收到响应，应当安全地重试该请求
+
+响应：
+
+```json
+{
+  "id": "exp_4821",
+  "status": "queued",
+  "status_url": "/api/exports/exp_4821"
+}
+```
+
+## 任务生命周期
+
+任务会经过以下状态：
+
+- `queued`
+- `running`
+- `completed`
+- `failed`
+
+状态响应：
+
+```json
+{
+  "id": "exp_4821",
+  "status": "running",
+  "progress": 42
+}
+```
+
+当导出完成后，返回：
+
+```json
+{
+  "id": "exp_4821",
+  "status": "completed",
+  "download_url": "/api/exports/exp_4821/download",
+  "expires_at": "2026-04-07T18:24:11Z"
+}
+```
+
+## Worker 要求
+
+- 在创建任务时，对提交的过滤参数进行快照
+- 将数据行流式写入 CSV 文件，而不是在内存中缓冲整份导出
+- 在写入数据块时更新 `progress`
+- 如果生成过程意外停止，将任务标记为 `failed` 并附带错误信息
+- 将已完成的产物保存 24 小时
+
+## 下载端点
+
+`GET /api/exports/:id/download`
+
+- 要求发起请求的用户与该任务属于同一个工作区
+- 如果任务尚未完成，返回 `404`
+- 如果产物已过期，返回 `410`
+- 以 `text/csv` 流式返回文件
+
+## 建议的数据库结构
+
+```sql
+create table export_jobs (
+  id text primary key,
+  workspace_id text not null,
+  requested_by text not null,
+  resource text not null,
+  format text not null,
+  filters jsonb not null,
+  status text not null,
+  progress integer not null default 0,
+  artifact_path text,
+  error_message text,
+  expires_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+```
