@@ -64,6 +64,12 @@
                   "docs/implementation-exercises/async-export-jobs",
                   "docs/implementation-exercises/team-feature-flags"
                 ]
+              },
+              {
+                "group": "Trivia",
+                "pages": [
+                  "docs/trivia/tom-bombadil"
+                ]
               }
             ]
           },
