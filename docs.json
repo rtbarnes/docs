@@ -134,6 +134,12 @@
                 ]
               },
               {
+                "group": "Star Wars",
+                "pages": [
+                  "docs/fr/star-wars"
+                ]
+              },
+              {
                 "group": "Personnalisation",
                 "pages": [
                   "docs/fr/essentials/settings",
