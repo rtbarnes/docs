@@ -34,6 +34,12 @@
                 ]
               },
               {
+                "group": "Star Wars",
+                "pages": [
+                  "docs/star-wars"
+                ]
+              },
+              {
                 "group": "Customization",
                 "pages": [
                   "docs/essentials/settings",
@@ -125,6 +131,12 @@
                   "docs/fr/index",
                   "docs/fr/quickstart",
                   "docs/fr/development"
+                ]
+              },
+              {
+                "group": "Star Wars",
+                "pages": [
+                  "docs/fr/star-wars"
                 ]
               },
               {
